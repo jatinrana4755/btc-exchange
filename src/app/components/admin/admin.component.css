@@ -1,0 +1,23 @@
+body{
+    min-width: auto!important;
+}
+.page-sidebar.fixedscroll {
+    z-index: 991;
+}
+.wraplist .active{
+    background-image: linear-gradient(to right bottom, #e8962e, #e45131) !important;
+    border-left: 4px solid #c35d22!important;
+    color: #fff!important;
+}
+.userLogo {
+    text-transform: uppercase;
+    background: #e8962e;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 22px;
+    line-height: 35px;
+    /* padding: 9px; */
+    height: 35px;
+    width: 35px;
+    display: inline-block;
+}

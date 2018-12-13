@@ -1,0 +1,50 @@
+/* .r4_counter.db_box.active span{
+    color:#fff;
+}
+.r4_counter.db_box.active[_ngcontent-c2] h3{
+    color: #fff;
+} */
+.tabsB.active h2,.tabsB.active span,.tabsB.active i{
+    color: #fff;
+}
+.tab-content{
+    background: #f7f7f7;
+}
+
+.active-buy, .active-sell {
+    color: #c0c4c8;
+    background-color: #24262d;
+    border: 1px solid #eaeaea;
+    border-bottom-color: #e77512;
+    border-bottom-width: 2px;
+    background-image: linear-gradient(to right bottom, #e8962e, #e45131) !important;
+}
+.active-buy h3, .active-sell h3,.active-buy i, .active-sell i,.active-buy span, .active-sell span{
+    color: #fff;
+}
+.tabsB:hover i{
+    color: #fff;
+}
+.nav>li>a {
+    position: relative;
+    display: block;
+    border-radius: 9px;
+    padding: 20px 15px;
+}
+.nav>li>a {
+    border-radius: 9px;
+    padding: 24px 15px!important;
+}
+
+.nav>li>a:hover h2, .nav>li>a:hover i{
+    color: #fff;
+}
+.nav>li>a.has-gradient-to-right-bottom h2,.nav>li>a.has-gradient-to-right-bottom i{
+    color: #fff!important;
+}
+.nav>li>a.has-gradient-to-right-bottom:hover h2,.nav>li>a.has-gradient-to-right-bottom:hover i{
+    color: #fff;
+}
+/* .nav>li>a h2, .nav>li>a i{
+    color: #777
+} */

@@ -1,0 +1,880 @@
+<!-- START CONTAINER -->
+
+
+<!-- SIDEBAR - START -->
+
+
+
+
+<!-- START CONTENT -->
+<section id="main-content" class=" ">
+  <div class="wrapper main-wrapper row">
+
+    <div class='col-xs-12' style="padding-left: 44px;">
+      <div class="page-title">
+
+        <div class="pull-left">
+          <!-- PAGE HEADING TAG - START -->
+          <h1 class="title">Buy & Sell</h1>
+          <!-- PAGE HEADING TAG - END -->
+        </div>
+
+
+      </div>
+    </div>
+    <style>
+      .nav-tabs>li.active>a,
+      .nav-tabs>li.active>a:hover,
+      .nav-tabs>li.active>a:focus {
+        color: #c0c4c8;
+        background-color: #24262d;
+        border: 1px solid #eaeaea;
+        border-bottom-color: #e77512;
+        border-bottom-width: 2px;
+        background-image: linear-gradient(to right bottom, #e8962e, #e45131) !important;
+      }
+    </style>
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+
+      <ul class="nav nav-tabs" style="border:none;padding-left: 31px;">
+        <li class="tabsB active" style="width: 49%;">
+          <a href="#home-3" class="r4_counter db_box has-gradient-to-right-bottom" [ngClass]="{'has-gradient-to-right-bottom': activebuy}"
+            data-toggle="tab" (click)="activeBuy()">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+              <div>
+                <!--  <div class="icon-after">
+                     <img src="assets/images/icons/sell-icon-lg.png" alt="">
+                   </div> -->
+                <i class='pull-left ico-icon icon-md icon-primary ' style="font-size: 25px;">
+                      <i class="fas fa-cart-arrow-down" style="font-size: 25px;"></i>
+                </i>
+                <div class="stats" style="padding: 0 20px;border-left: 1px solid #eeebeb;">
+                  <h2 class="mb-5">Buy Cryptocurrency</h2>
+
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="tabsB" style="width: 49%;">
+          <a href="#profile-3" class="r4_counter db_box" [ngClass]="{'has-gradient-to-right-bottom': activesell}" data-toggle="tab"
+            (click)="activeSell()">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+              <div>
+                <!--   <div class="icon-after">
+                     <img src="../data/icons/buy-icon-lg.png" alt="">
+                   </div> -->
+                <i class='pull-left ico-icon icon-md icon-primary ' style="font-size: 25px;">
+                      <i class="fas fa-money-bill-wave" style="font-size: 25px;"></i>
+                </i>
+                <div class="stats" style="padding: 0 20px;border-left: 1px solid #eeebeb;">
+                  <h2 class="mb-5">Sell Cryptocurrency</h2>
+
+                </div>
+              </div>
+            </div>
+          </a>
+        </li>
+
+      </ul>
+
+      <div class="tab-content" style="border:none;">
+        <div class="tab-pane active" id="home-3">
+          <div class="col-lg-6" *ngIf="!showBuyOrderStatus">
+            <section class="box has-border-left-3">
+              <header class="panel_header">
+                <h2 class="title pull-left">Buy Cryptocurrency</h2>
+                <div class="actions panel_actions pull-right">
+                  <a class="box_toggle fa fa-chevron-down"></a>
+                </div>
+              </header>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="transfer-wraper">
+                      <form [formGroup]="buyForm" novalidate>
+                        <div class="form-group no-mb">
+
+                          <label class="form-label">Choose payment method</label>
+                          <span *ngIf="payment.invalid && (payment.dirty || payment.touched) || (buyFormConfirm && payment.invalid)" style="color: red;">Please select a payment method</span>
+                          <div class="form-group">
+                            <select class="form-control" id="sel1" style="color:#333333" formControlName="payment" (change)="returnBuyPaymentTitle()">
+                                  <option value="" disabled>Choose payment method</option>
+                                <option *ngFor="let p of buyPaymentMethod"  [(ngValue)]="p.id" style="color:#333333">  
+                                  {{p.title}}
+                                </option>
+                              </select>
+                          </div>
+
+                          <label class="form-label">Select the cryptocurrency</label>
+                          <span *ngIf="coin.invalid && (coin.dirty || coin.touched) || (buyFormConfirm && coin.invalid)" style="color: red;">Please select a crypto currency</span>
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">$</span>
+                            <div class="form-group">
+                              <select style="color:#333333;" class="form-control" id="currency" formControlName="coin" (change)="currencyChange($event)">
+                                  <option value="" disabled>Select the cryptocurrency</option>
+                            <option [value]="c.id" style="color:#333333" *ngFor="let c of currency" >{{c.name}}</option>  
+                          </select>
+                            </div>
+                          </div>
+
+                          <label class="form-label">Wallet address at which you want to receive cryptocurrency</label>
+                          <span class="desc"></span>
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="text" class="form-control" placeholder="Wallet Address" name="buyAddress" style="color:#333333" formControlName="address"
+                              [value]="coinAddress" readOnly>
+                          </div>
+
+                          <label class="form-label">Amount of currency to buy</label>
+                          <span class="desc"></span>
+                          <span *ngIf="!amount.errors?.decimal8 && amount.invalid && !amount.errors.pattern && (amount.dirty || amount.touched) || (buyFormConfirm && amount.invalid)"
+                            style="color: red;">Please enter the amount of currency</span>
+                          <span *ngIf="amount.errors && amount.errors.pattern" style="color: red;">Please Enter Positive Value</span>
+                          <span *ngIf="amount.errors?.decimal8" style="color: red;">Please do not enter more than 8 decimal places</span>                          
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="number" class="form-control" name="amount" style="color:#333333" formControlName="amount" (keyup)="changeTotalAmount($event.target.value)"
+                              placeholder="Enter The Amount Of Currency">
+                          </div>
+
+                          <label class="form-label">Total Amount (in USD) you need to pay</label>
+                          <span class="desc"></span>
+                          <span *ngIf=" !fee_ammount.errors?.decimal8 && fee_ammount.invalid && !fee_ammount.errors.pattern && (fee_ammount.dirty || fee_ammount.touched) || (buyFormConfirm && fee_ammount.invalid)"
+                            style="color: red;">Please enter the total amount</span>
+                            <span *ngIf="fee_ammount.errors && fee_ammount.errors.pattern" style="color: red;">Please Enter Positive Value</span>  
+                          <span *ngIf="fee_ammount.errors?.decimal8" style="color: red;">Please do not enter more than 8 decimal places</span>                          
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="number" class="form-control" style="color:#333333" formControlName="fee_ammount" (keyup)="changeAmountOfCurrency($event.target.value)"
+                              placeholder="Total Amount">
+                          </div>
+
+
+                          <button type="submit" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:100%" (click)="buyNow()">Buy Now</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+
+
+          <div *ngIf="showBuyDetails && !showBuyOrderStatus" class="col-lg-6">
+            <section class="box has-border-left-3">
+              <header class="panel_header">
+                <h2 class="title pull-left">YOU ARE BUYING THE FOLLOWING</h2>
+
+              </header>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-xs-12 mt-20 mb-30">
+                    <h3 class="mb text-center bold">{{amount.value}} {{currencySelected}} with {{fee_ammount.value}} USD</h3>
+                    <small class="text-center f-s-14" style="display:block;font-weight:600">@ {{paymentCurrencySelectedValue}} USD per {{currencySelected}} </small>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="deal-wrapper">
+                    <ul class="dropdown-menu-list list-unstyled no-mb">
+                      <li>
+                        <div class="notice-icon">
+                          <i class="fa fa-institution"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                         <strong>{{ buyPaymentTitle }}</strong> 
+                         <span class="time small">Payment method</span>
+                          </span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notice-icon">
+                          <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                         <strong>{{coinAddress}}</strong>
+                         <span class="time small">Wall address at which you want to receive </span>
+                          </span>
+                        </div>
+                      </li>
+
+                      <li *ngIf="buyPaymentTitle=='Western Union' || buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram'|| buyPaymentTitle=='PaynearMe' || buyPaymentTitle=='ACH'">
+                        <div class="notice-icon">
+                          <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                            <strong>Payment Information</strong>
+                            <span class="time small" *ngIf="buyPaymentTitle=='Western Union' || buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram'">
+                              <div>
+                                  <p>Randomly pick a name from a database!!</p>
+                              </div>
+                            </span>
+                          <span class="time small" *ngIf="buyPaymentTitle=='PaynearMe'">
+                                <div>
+                                    <p>Your PayNearMe code will be generated after a few minutes</p>
+                                </div>
+                            </span>
+
+                          <div style="padding-left:10%;" *ngIf="buyPaymentTitle=='ACH'">
+                            <p class="text text-info" style="align-content: center;">Fill the Payment Details</p>
+                            <form [formGroup]="achBuyForm" novalidate>
+                              <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <span *ngIf="achName1.invalid && (achName1.dirty || achName1.touched) || (achBuyFormConfirm && achName1.invalid)" style="color: red;">Please enter Name</span>
+                                <input type="text" class="form-control" name="achName" placeholder="Enter Name" name="achName" formControlName="achName"
+                                  style="color: black;">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Routing Number</label>
+                                <span *ngIf="achRoutingNumber1.invalid && (achRoutingNumber1.dirty || achRoutingNumber1.touched) || (achBuyFormConfirm && achRoutingNumber1.invalid)"
+                                  style="color: red;">Please enter Routing Number</span>
+                                <input type="text" class="form-control" id="achRoutingNumber" placeholder="Enter Routing Number" name="achRoutingNumber"
+                                  formControlName="achRoutingNumber" style="color: black;">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Bank Name</label>
+                                <span *ngIf="achBankName1.invalid && (achBankName1.dirty || achBankName1.touched) || (achBuyFormConfirm &&  achBankName1.invalid)"
+                                  style="color: red;">Please enter Bank Name</span>
+                                <input type="text" class="form-control" id="achBankName" placeholder="Enter Bank Name" name="achBankName" formControlName="achBankName"
+                                  style="color: black;">
+                              </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Account Number</label>
+                                <span *ngIf="achAccountNumber1.invalid && (achAccountNumber1.dirty || achAccountNumber1.touched) || (achBuyFormConfirm && achAccountNumber1.invalid)"
+                                  style="color: red;">Please enter Account Number</span>
+                                <input type="text" class="form-control" id="achAccountNumber" placeholder="Enter Account Number" name="achAccountNumber"
+                                  formControlName="achAccountNumber" style="color: black;">
+                              </div>
+                            </form>
+                          </div>
+
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+
+                  </div>
+                  <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:100%" (click)="ConfirmBuy()">Confirm</button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- buy order status show dialog starts-->
+          <div *ngIf="showBuyOrderStatus" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="clearfix"></div>
+            <section class="box has-border-left-3">
+              <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <h2 class="mb text-center bold">Buy Order Status</h2>
+              </div>
+              <div class="content-body">
+                <div class="row" *ngIf="buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram'">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==-1">
+                    <p class="text text-info h3" style="align-content: center;">Order Awaiting Payment from Buyer</p>
+                    <br>
+                    <form [formGroup]="uploadBuyTrNoForm" novalidate>
+                      <div class="form-group">
+                        <label for="buyOrdertr">upload Money Control Number/Transaction Number</label>
+                        <span *ngIf="transaction_noWire.invalid && (transaction_noWire.dirty || transaction_noWire.touched) || (transaction_noWire.invalid && trNoBoolean)"
+                          style="color: red;">Please upload Money Control Number/Transaction Number </span>
+                        <input type="text" class="form-control" id="buyOrdertr" placeholder="Enter Control Number/Transaction Number" name="buyOrderStatusTr"
+                          formControlName="transaction_no" style="color: black;">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==0">
+                    <p class="text text-info h3" style="align-content: center;">Order Processing</p>
+
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="( buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram') && (showBuyOrderStatusResponse.status==-1)">
+                  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-lg-3 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                    <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:80%; align-content: center;"
+                      (click)="UploadTransactionNumberForWURiaMoney()">Upload</button>
+                  </div>
+                </div>
+                <div class="row" *ngIf="buyPaymentTitle == 'Cash Deposit'">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==-1">
+                    <p class="text text-info h3" style="align-content: center;">Order Awaiting Payment from Buyer</p>
+                    <br>
+                    <form  novalidate>
+                      <div class="form-group">
+                        <label for="receipt">Upload Cash Deposit Receipt</label>
+                        <input type="file" class="form-control" id="receipt"  style="color: black;" (change)="handlefileInput($event.target.files)" >
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==0">
+                    <p class="text text-info h3" style="align-content: center;">Order Processing</p>
+
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="( buyPaymentTitle=='Cash Deposit' && showBuyOrderStatusResponse.status==-1)">
+                  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-lg-3 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                    <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:80%; align-content: center;"
+                      (click)="UploadReceipt()" [disabled]="!fileToUpload">Upload</button>
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="buyPaymentTitle=='PaynearMe'">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3">
+                    <p class="text text-info h3" style="align-content: center;">Order Awaiting Code</p>
+                    <br>
+                    <p>
+                      Your PayNearMe code for this order will be generated soon!
+                    </p>
+                  </div>
+                </div>
+                <div class="row" *ngIf="buyPaymentTitle=='ACH'">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text text-info">Order Processing</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text text-success">Order Details</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3">
+                    <p>Payment Method : {{buyPaymentTitle}}</p>
+                    <p>Currency : {{showBuyOrderStatusResponse.coin_name}}</p>
+                    <p>Address Receiving Cryptocurrency : {{showBuyOrderStatusResponse.address}}</p>
+                    <p>Amount of Currency Bought : {{showBuyOrderStatusResponse.amount}}</p>
+                    <p>Total Amount paid (USD) : ${{showBuyOrderStatusResponse.fee_ammount}}</p>
+                  </div>
+                </div>
+                <div class="row" *ngIf="buyPaymentTitle=='ACH'">
+                  <div class="col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text text-success">ACH Payment Details</h3>
+                    <p>Name : {{achInfo.achName}}</p>
+                    <p>Routing Number : {{achInfo.achRoutingNumber}}</p>
+                    <p>Bank Name : {{achInfo.achBankName}}</p>
+                    <p>Account Number : {{achInfo.achAccountNumber}}</p>
+                  </div>
+                </div>
+                <div class="row" *ngIf="wuResponse">
+                  <div class="col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text heading-modal">{{payment_name}} Details</h3>
+                  </div>
+                  <div class="row">
+                    <div class="center"><i class="fa fa-spin fa-spinner" *ngIf="wuLoading" style="font-size:50px;"></i></div>
+                    <div class="col-md-6 col-md-offset-3" *ngIf="!wuLoading">
+                      <div *ngFor="let key of keyArr">
+                        <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[key]}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-lg-3 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                    <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:80%; align-content: center;"
+                      (click)="BuyMore()">Buy More</button>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div>
+          <!-- buy order status show dialog ends-->
+
+          <div class="clearfix"></div>
+        </div>
+        <div class="tab-pane fade" id="profile-3">
+          <div class="col-lg-6" *ngIf="!showSellOrderStatus">
+            <section class="box has-border-left-3">
+              <header class="panel_header">
+                <h2 class="title pull-left">Sell Cryptocurrency</h2>
+                <div class="actions panel_actions pull-right">
+                  <a class="box_toggle fa fa-chevron-down"></a>
+                  <!--  <a class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></a> -->
+                  <!--  <a class="box_close fa fa-times"></a> -->
+                </div>
+              </header>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="transfer-wraper">
+                      <form [formGroup]="sellForm" novalidate>
+                        <div class="form-group no-mb">
+                          <label class="form-label">Select the cryptocurrency</label>
+                          <span *ngIf="sellcoin.invalid && (sellcoin.dirty || sellcoin.touched) || (sellFormConfirm && sellcoin.invalid)" style="color: red;">Please select a crypto currency!</span>
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">$</span>
+                            <div class="form-group">
+                              <select style="color:#333333;" class="form-control" id="currency" formControlName="coin" (change)="sellCurrencyChange($event)">
+                                  <option value="" disabled>Select the cryptocurrency</option>
+                            <option [value]="c.id" style="color:#333333" *ngFor="let c of currency" >{{c.name}}</option>  
+                          </select>
+                            </div>
+                          </div>
+                          <label class="form-label">How would you like to be paid</label>
+                          <span *ngIf="sellpayment.invalid && (sellpayment.dirty || sellpayment.touched) || (sellFormConfirm && sellpayment.invalid)"
+                            style="color: red;">Please select a payment method</span>
+                          <div class="form-group">
+                            <select class="form-control" id="sel1" style="color:#333333" formControlName="payment" (change)="returnSellPaymentTitle()">
+                              <option value="" disabled>Select a payment method</option>
+                            <option *ngFor="let p of sellPaymentMethod"  [(ngValue)]="p.id" style="color:#333333">  
+                              {{p.title}}
+                            </option>
+                        </select>
+                          </div>
+                          <label class="form-label">Send your crypto currency to this address </label>
+                          <span class="desc"></span>
+                          <span *ngIf="selladdress.invalid && (selladdress.dirty || selladdress.touched) || (sellFormConfirm && selladdress.invalid)"
+                            style="color: red;">Please enter the wall address</span>
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="text" class="form-control" name="address" style="color:#333333" placeholder="Wallet Address" formControlName="address">
+                          </div>
+                          <label class="form-label">Amount of currency</label>
+                          <span class="desc"></span>
+                          <span *ngIf="!sellamount.errors?.decimal8 && sellamount.invalid && !sellamount.errors.pattern && (sellamount.dirty || sellamount.touched) || (sellFormConfirm && sellamount.invalid) "
+                            style="color: red;">Please enter the amount of currency</span>
+                          <span *ngIf="sellamount.errors && sellamount.errors.pattern" style="color: red;">Amount of Currency Should be Positive</span>
+                          <span *ngIf="sellamount.errors?.decimal8" style="color: red;">Please do not enter more than 8 decimal places</span>                                                   
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="number" class="form-control" name="amount" style="color:#333333" formControlName="amount" (keyup)="sellChangeTotalAmount($event.target.value)"
+                              placeholder="Amount Of Currency">
+                          </div>
+
+                          <label class="form-label">Total Amount (in USD) you will get paid</label>
+                          <span class="desc"></span>
+                          <span *ngIf="sellfee_ammount.invalid && !sellfee_ammount.errors.pattern && !sellfee_ammount.errors?.decimal8 && (sellfee_ammount.dirty || sellfee_ammount.touched) || (sellFormConfirm && sellfee_ammount.invalid) "
+                            style="color: red;">Please enter the total amount</span>
+                          <span *ngIf="sellfee_ammount.errors && sellfee_ammount.errors.pattern" style="color: red;">Total Amount in USD should be Positive</span>
+                          <span *ngIf="sellfee_ammount.errors?.decimal8" style="color: red;">Please do not enter more than 8 decimal places</span>                                                                             
+                          <div class="input-group mb-10">
+                            <span class="input-group-addon">
+                         <span class="arrow"></span>
+                            <img src="assets/images/icons/wallet-o-dark.png" alt="icon">
+                            </span>
+                            <input type="number" class="form-control" style="color:#333333" formControlName="fee_ammount" (keyup)="sellChangeAmountOfCurrency($event.target.value)"
+                              placeholder="Total Amount">
+                          </div>
+
+
+                          <button type="submit" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:100%" (click)="sellNow()">Sell Now</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+
+
+          <div *ngIf="showSellDetails && !showSellOrderStatus" class="col-lg-5">
+            <div class="clearfix"></div>
+            <section class="box has-border-left-3">
+              <header class="panel_header">
+                <h3 class="mb text-center bold">YOU ARE SELLING THE FOLLOWING</h3>
+              </header>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-xs-12 mt-20 mb-30">
+                    <h3 class="mb text-center bold"> {{sellamount.value}} {{sellCurrencySelected}} with {{sellfee_ammount.value}} USD</h3>
+                    <small class="text-center f-s-14" style="display:block;font-weight:600">@ {{sellPaymentCurrencySelectedValue}} USD per {{sellCurrencySelected}}</small>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="deal-wrapper">
+                    <ul class="dropdown-menu-list list-unstyled no-mb">
+                      <li>
+                        <div class="notice-icon">
+                          <i class="fa fa-institution"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                         <strong>{{sellPaymentTitle}}</strong> 
+                         <span class="time small">How would you like to be paid`</span>
+                          </span>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notice-icon">
+                          <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                        <strong>{{selladdress.value}}</strong>
+                        <span class="time small">Send your  crpto currency to this address</span>
+                          </span>
+                        </div>
+                      </li>
+                      <li *ngIf="sellPaymentTitle=='Western Union' || sellPaymentTitle=='Ria' || sellPaymentTitle=='Money Gram'|| sellPaymentTitle=='Wire'">
+                        <div class="notice-icon">
+                          <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div>
+                          <span class="name">
+                              <strong>Payment Information</strong>
+                              <span class="time small" *ngIf="sellPaymentTitle=='Western Union' || sellPaymentTitle=='Ria' || sellPaymentTitle=='Money Gram'">
+                                <div>
+                                    <p>You will receive a Money Control Number after your crypto is received</p>
+                                </div>
+                              </span>
+
+                          <div style="padding-left:10%;" *ngIf="sellPaymentTitle=='Wire'">
+                            <p class="text text-info" style="align-content: center;">Fill the Payment Details</p>
+                            <form [formGroup]="wireSellForm" novalidate>
+                              <div class="form-group no-mb">
+                                <label class="form-label">Enter Name</label>
+                                <span *ngIf="wireName.invalid && (wireName.dirty || wireName.touched)" style="color: red;">Name should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="name1" placeholder="Enter Name" formControlName="wireName" style="color: black;">
+                                </div>
+
+                                <label class="form-label">Enter Address</label>
+                                <span *ngIf="wireAddress.invalid && (wireAddress.dirty || wireAddress.touched)" style="color: red;">Address should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="routing1" placeholder="Enter Address" formControlName="wireAddress" style="color: black;">
+                                </div>
+
+                                <label class="form-label">Enter Bank Name</label>
+                                <span *ngIf="wireBankName.invalid && (wireBankName.dirty || wireBankName.touched)" style="color: red;">Bank Name should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="name1" placeholder="Enter Bank Name" formControlName="wireBankName" style="color: black;">
+                                </div>
+
+                                <label class="form-label">Enter Bank Routing Number</label>
+                                <span *ngIf="wireBankRoutingNumber.invalid && (wireBankRoutingNumber.dirty || wireBankRoutingNumber.touched)" style="color: red;">Bank Routing number should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="routing1" placeholder="Enter Address" formControlName="wireBankRoutingNumber"
+                                    style="color: black;">
+                                </div>
+
+                                <label class="form-label">Enter Bank Address</label>
+                                <span *ngIf="wireBankAddress.invalid && (wireBankAddress.dirty || wireBankAddress.touched)" style="color: red;">Bank Address should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="name1" placeholder="Enter Bank Name" formControlName="wireBankAddress" style="color: black;">
+                                </div>
+
+                                <label class="form-label">Enter Bank Swift Code</label>
+                                <span *ngIf="wireBankSwiftCode.invalid && (wireBankSwiftCode.dirty || wireBankSwiftCode.touched)" style="color: red;">Bank Swift Code should be provided</span>
+                                <div class="form-group">
+                                  <input type="text" class="form-control" id="routing1" placeholder="Enter Address" formControlName="wireBankSwiftCode" style="color: black;">
+                                </div>
+
+                              </div>
+                            </form>
+                          </div>
+                          </span>
+                        </div>
+                      </li>
+
+                    </ul>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:100%" (click)="ConfirmSell()">Confirm</button>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <!-- sell order status show dialog starts-->
+          <div *ngIf="showSellOrderStatus" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="clearfix"></div>
+            <section class="box has-border-left-3">
+              <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <h2 class="mb text-center bold">Sell Order Status</h2>
+              </div>
+              <div class="content-body">
+                <div class="row">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showSellOrderStatusResponse.status==-1">
+                    <p class="text text-danger h3" style="align-content: center;">Order Awaiting Crypto Deposit. Please send your cryptocurrency to this address: {{showSellOrderStatusResponse.address}}</p>
+
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showSellOrderStatusResponse.status==0">
+                    <p class="text text-info h3" style="align-content: center;" *ngIf="sellPaymentTitle=='Wire'">
+                      You will get your Wire Reference Number Soon.
+                    </p>
+                    <p class="text text-info h3" style="align-content: center;" *ngIf="(sellPaymentTitle=='Western Union' || sellPaymentTitle=='Money Gram' || sellPaymentTitle=='Ria')">
+                      You will get your Wire Reference Number Soon.
+                    </p>
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showSellOrderStatusResponse.status==1">
+                    <p class="text text-success h3" style="align-content: center;">
+                      Order Complete
+                    </p>
+
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text text-success">Order Details</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3">
+                    <p>Payment Method : {{sellPaymentTitle}}</p>
+                    <p>Currency : {{showSellOrderStatusResponse.coin_name}}</p>
+                    <p>Address for sending Cryptocurrency : {{showSellOrderStatusResponse.address}}</p>
+                    <p>Amount of cryptocurrency sold : {{showSellOrderStatusResponse.amount}}</p>
+                    <p>Total Amount you will get paid (USD) : ${{showSellOrderStatusResponse.fee_ammount}}</p>
+                  </div>
+                </div>
+                <div class="row" *ngIf="sellPaymentTitle=='Wire'">
+                  <div class="col-md-6 col-md-offset-3">
+                    <h3 style="align-content: center;" class="text text-success">Wire Payment Details where you will get paid</h3>
+                    <p>Name : {{wireInfo.wireName}}</p>
+                    <p>Address : {{wireInfo.wireAddress}}</p>
+                    <p>Bank Name : {{wireInfo.wireBankName}}</p>
+                    <p>Bank Routing Number : {{wireInfo.wireBankRoutingNumber}}</p>
+                    <p>Bank Address : {{wireInfo.wireBankAddress}}</p>
+                    <p>Bank Swift Code : {{wireInfo.wireBankSwiftCode}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-lg-3 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                    <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:80%; align-content: center;"
+                      (click)="SellMore()">Sell More</button>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+          </div>
+          <!-- sell order status show dialog ends-->
+          <div class="clearfix"></div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- MAIN CONTENT AREA ENDS -->
+    <!--
+    <form [formGroup]="testForm" novalidate>
+        <div class="form-group no-mb">
+          <label class="form-label">Enter Name</label>
+          <span *ngIf="name1.invalid && (name1.dirty || name1.touched)" style="color: red;">Name should be provided</span>
+            <div class="form-group">
+                <input type="text" class="form-control" id="name1"  placeholder="Enter email" formControlName="name1">
+            </div>
+          
+          <label class="form-label">Enter Routing Number</label>
+          <span *ngIf="routing1.invalid && (routing1.dirty || routing1.touched) && !routing1.errors.pattern" style="color: red;">Routing number should be provided</span>
+          <span *ngIf="routing1.errors && routing1.errors.pattern" style="color: red;">Routing Number should be Positive </span>
+          <div class="form-group">
+              <input type="number" class="form-control" id="routing1"  placeholder="Enter Routing Number" formControlName="routing1">
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:100%" (click)="sellNow()">TestForm Submit</button>
+        </div>
+    </form>
+  -->
+  </div>
+</section>
+<!-- END CONTENT -->
+
+<!--
+   <div class="page-chatapi hideit">
+
+     <div class="search-bar">
+       <input type="text" placeholder="Search" class="form-control">
+     </div>
+
+           <div class="chat-wrapper">
+
+       <h4 class="group-head">Favourites</h4>
+       <ul class="contact-list">
+
+         <li class="user-row " id='chat_user_1' data-user-id='1'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-1.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Joge Lucky</a></h4>
+             <span class="status available" data-status="available"> Available</span>
+           </div>
+           <div class="user-status available">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_2' data-user-id='2'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-2.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Folisise Chosiel</a></h4>
+             <span class="status away" data-status="away"> Away</span>
+           </div>
+           <div class="user-status away">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_3' data-user-id='3'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-3.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Aron Gonzalez</a></h4>
+             <span class="status busy" data-status="busy"> Busy</span>
+           </div>
+           <div class="user-status busy">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+
+       </ul>
+
+       <h4 class="group-head">More Contacts</h4>
+       <ul class="contact-list">
+
+         <li class="user-row " id='chat_user_4' data-user-id='4'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-4.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Chris Fox</a></h4>
+             <span class="status offline" data-status="offline"> Offline</span>
+           </div>
+           <div class="user-status offline">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_5' data-user-id='5'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-5.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Mogen Polish</a></h4>
+             <span class="status offline" data-status="offline"> Offline</span>
+           </div>
+           <div class="user-status offline">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_6' data-user-id='6'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-1.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Smith Carter</a></h4>
+             <span class="status available" data-status="available"> Available</span>
+           </div>
+           <div class="user-status available">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_7' data-user-id='7'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-2.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Amilia Gozenal</a></h4>
+             <span class="status busy" data-status="busy"> Busy</span>
+           </div>
+           <div class="user-status busy">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_8' data-user-id='8'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-3.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Tahir Jemyship</a></h4>
+             <span class="status away" data-status="away"> Away</span>
+           </div>
+           <div class="user-status away">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_9' data-user-id='9'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-4.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Johanson Wright</a></h4>
+             <span class="status busy" data-status="busy"> Busy</span>
+           </div>
+           <div class="user-status busy">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_10' data-user-id='10'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-5.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Loni Tindall</a></h4>
+             <span class="status away" data-status="away"> Away</span>
+           </div>
+           <div class="user-status away">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_11' data-user-id='11'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-1.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Natcho Herlaey</a></h4>
+             <span class="status idle" data-status="idle"> Idle</span>
+           </div>
+           <div class="user-status idle">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+         <li class="user-row " id='chat_user_12' data-user-id='12'>
+           <div class="user-img">
+             <a href="#"><img src="../data/profile/avatar-2.png" alt=""></a>
+           </div>
+           <div class="user-info">
+             <h4><a href="#">Shakira Swedan</a></h4>
+             <span class="status idle" data-status="idle"> Idle</span>
+           </div>
+           <div class="user-status idle">
+             <i class="fa fa-circle"></i>
+           </div>
+         </li>
+
+       </ul>
+     </div>
+
+   </div>
+
+
+   <div class="chatapi-windows ">
+
+
+   </div>
+   -->
+
+<!-- END CONTAINER -->

@@ -1,0 +1,182 @@
+<!-- START CONTENT -->
+<section id="main-content" class=" ">
+
+    <div class="wrapper main-wrapper row" style=''>
+
+        <div class="col-lg-12" style="margin:auto;float: none;">
+            <div class="alert alert-message" id="alert-message">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <i class="fas" id="icon-alert"></i> &nbsp; {{message}}
+            </div>
+            <section class="box" style="border-left: 3px solid #e77512;">
+                <!-- <div class="loader" *ngIf="loading"></div> -->
+                <button class="btn btn-primary btn-md" [hidden]="true" data-toggle="modal" data-target="#addMethodModal">
+                    <i class="fas fa-plus"></i> &nbsp;Add New Payment Method
+                </button>
+                <header class="panel_header">
+                    <h2 class="title pull-left">Payment Methods</h2>
+                    <div class="actions panel_actions pull-right">
+                        <!-- <a class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></a> -->
+                        <!-- <a class="box_close fa fa-times"></a> -->
+                    </div>
+                </header>
+
+                <div class="content-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="table-responsive" data-pattern="priority-columns">
+                                <table id="paymentMeth" class="table table-small-font no-mb table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Methods</th>
+                                            <th>Status</th>
+                                            <th>Method Type</th>
+                                            <th>Option</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let method of methods">
+                                            <td>{{method.title}}</td>
+
+                                            <td *ngIf="method.is_active"><label class="btn-success btn">Active</label></td>
+                                            <td *ngIf="!method.is_active"><label class="btn-danger btn btn-sm">In-Active</label></td>
+
+                                            <td>
+                                                <span *ngIf="method.buymethod && !method.sellmethod"><label class="btn-success btn" style="width: 87.34px;">Buy</label></span>
+                                                <span *ngIf="method.sellmethod && method.buymethod "><label class="btn-info btn">Buy/Sell</label></span>
+                                                <span *ngIf="!method.buymethod && method.sellmethod"><label class="btn-danger btn" style="width: 87.34px;">Sell</label></span>
+                                            </td>
+
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" [hidden]="true" data-toggle="modal" data-target="#editMethodModal" (click)="editMethod(method)">
+                                              Edit</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- MAIN CONTENT AREA ENDS -->
+    </div>
+</section>
+<!--Add method Modal -->
+<div id="addMethodModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Payment Method</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="methods">title</label>
+                        <input type="text" name="methodTitle" class="form-control" id="methods" [(ngModel)]="newMethod" required placeholder="Payment Method">
+                    </div>
+                    <div class="form-group">
+                        <label>PaymentType</label>
+                        <div>
+                            <div class="col-xs-6">
+                                <label class="switch">
+                                    <input type="checkbox" name="methodType" checked id="sellmethod" [(ngModel)] = "sellmethod" [value]="sellmethod">
+                                    <span class="slider round"></span>
+                                </label><br>
+                                <label class="btn btn-success btn-sm" *ngIf="sellmethod">Sell</label>
+                                <label class="btn btn-danger btn-sm" *ngIf="!sellmethod">Sell</label>                                
+                                <!-- <label *ngIf="!sellmethod" class="btn btn-danger btn-sm">Sell</label> -->
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="switch">
+                                    <input type="checkbox" name="methodType" checked id="buymethod" [(ngModel)] = "buymethod" [value]="buymethod">
+                                    <span class="slider round"></span>
+                                </label><br>
+                                <label *ngIf="buymethod" class="btn btn-success btn-sm">Buy </label>
+                                <label *ngIf="!buymethod" class="btn btn-danger btn-sm">Buy </label>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label><br>
+                        <label class="switch">
+                        <input type="checkbox" name="addstatus" checked id="addStatus" [(ngModel)] = "newStatus" [value]="newStatus">
+                        <span class="slider round"></span>
+                    </label><br>
+                        <label *ngIf="newStatus" class="btn btn-success btn-sm">Active</label>
+                        <label *ngIf="!newStatus" class="btn btn-danger btn-sm">InActive</label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="postPaymentMethod()"><i class="fas fa-plus"></i> &nbsp;Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit MOdal -->
+<div id="editMethodModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Payment Methods</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="methods">Title</label>
+                        <input type="text" class="form-control" name="title" id="methods" [value]="methodTitle" [(ngModel)]="methodTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Type</label>
+                        <div>
+                            <div class="col-xs-6">
+                                <label class="switch">
+                            <input type="checkbox" id="sell-method-edit" [(ngModel)]="sellmethodEdit" [value]="sellmethodEdit" name="sellmethodEdit">
+                            <span class="slider round"></span>
+                            </label><br>
+                                <label *ngIf="sellmethodEdit" class="btn btn-success btn-sm">Sell</label>
+                                <label *ngIf="!sellmethodEdit" class="btn btn-danger btn-sm">Sell</label>
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="switch">
+                            <input type="checkbox" id="buy-method-edit" [(ngModel)]="buymethodEdit" [value]="buymethodEdit" name="buymethodEdit">
+                            <span class="slider round"></span>
+                            </label><br>
+                                <label *ngIf="buymethodEdit" class="btn btn-success btn-sm">Buy</label>
+                                <label *ngIf="!buymethodEdit" class="btn btn-danger btn-sm">Buy</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label>Buy Method</label><br>
+                        <label class="switch">
+                        <input type="checkbox" id="buy-method-edit" [(ngModel)]="buymethodEdit" [value]="buymethodEdit" name="buymethodEdit">
+                        <span class="slider round"></span>
+                    </label><br>
+                        <label *ngIf="buymethodEdit" class="btn btn-success btn-sm">Buy</label>
+                    </div> -->
+                    <div class="form-group">
+                        <label>Status</label><br>
+                        <label class="switch">
+                        <input type="checkbox" id="editStatus" [(ngModel)]="statusEdit" [value]="statusEdit" name="status">
+                        <span class="slider round"></span>
+                    </label><br>
+                        <label *ngIf="statusEdit" class="btn btn-success btn-sm">Active</label>
+                        <label *ngIf="!statusEdit" class="btn btn-danger btn-sm">InActive</label>
+                    </div>
+                    <button type="submit" data-dismiss="modal" class="btn btn-success" (click)="onSubmit()"><i class="fas fa-check"></i> &nbsp;Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END CONTENT -->

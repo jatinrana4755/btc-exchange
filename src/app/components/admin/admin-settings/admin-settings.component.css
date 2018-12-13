@@ -1,0 +1,10 @@
+.has-border{
+    border-left: 3px solid #e77512;
+}
+
+.row{
+    margin: 0 !important;
+}
+.col-lg-12{
+    margin-bottom: 20px;
+}

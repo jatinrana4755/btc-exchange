@@ -1,0 +1,17 @@
+#Production stage
+production:   
+   stage: deploy
+   script:
+   
+     - apt-get update
+     - apt-get install sshpass
+     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+     - eval $(ssh-agent -s)
+     - mkdir -p ~/.ssh
+     - ssh-keygen -R "$ip" || echo "No host file yet!"
+     - ssh-keyscan -H "$ip" >> ~/.ssh/known_hosts
+     - sshpass -p $pass ssh backend@${ip} "cd /home/backend/new-btc-eth-exchange; git pull origin master"
+   
+   environment:     
+      name: production     
+      url: http://45.77.184.244

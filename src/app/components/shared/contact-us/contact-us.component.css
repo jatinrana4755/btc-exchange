@@ -1,0 +1,11 @@
+p{
+    margin-bottom: 20px;
+}
+h5{
+ border-bottom: 1px solid lightgrey;
+ padding-bottom: 5px;
+}
+label{
+ font-weight: 400;
+ color: #2f323b;
+}

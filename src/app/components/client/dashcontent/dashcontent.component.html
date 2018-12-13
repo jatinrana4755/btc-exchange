@@ -1,0 +1,506 @@
+<!-- START CONTENT -->
+<section id="main-content" class=" ">
+  <div class="wrapper main-wrapper row" >
+    <div class="col-lg-12" style="margin:auto;float: none;">
+      <section class="box nobox marginBottom0">
+        <div class="content-body">
+          <div class="row">
+            <div class="col-lg-5 col-sm-6 col-xs-12" (click)="BtcShowFun()">
+              <div class="r4_counter db_box " [ngClass]="{'has-gradient-to-right-bottom': BtcShow}">
+                <div class="icon-after cc BTC-alt"></div>
+                <i class='pull-left cc BTC-alt icon-md icon-primary mt-10'></i>
+                <div class="stats" *ngIf="BtcCoin">
+                  <h3 class="mb-5">BUY PRICE : ${{BtcCoin?.buy_price}} </h3>
+                  <span>SELL PRICE : ${{BtcCoin?.sell_price}} </span>
+                </div>
+                <div class="pull-left" style="margin-top: -21px;"><small>Bitcoin</small></div>                                                
+              </div>
+            </div>
+            <div class="col-lg-5 col-sm-6 col-xs-12" (click)="EthShowFun()">
+              <div class="r4_counter db_box" [ngClass]="{'has-gradient-to-right-bottom': !BtcShow}">
+                <div class="icon-after cc ETC-alt"></div>
+                <i class='pull-left cc ETC-alt icon-md icon-primary mt-10'></i>
+                <div class="stats" *ngIf="EthCoin">
+                  <h3 class="mb-5">BUY PRICE : ${{EthCoin?.buy_price}} </h3>
+                  <span>SELL PRICE : ${{EthCoin?.sell_price}} </span>
+                </div>
+                <div class="pull-left" style="margin-top: -21px;"><small>Ethereum</small></div>                                                                
+              </div>
+            </div>
+
+          </div>
+          <!-- End .row -->
+        </div>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+    <!-- MAIN CONTENT AREA STARTS -->
+
+
+
+
+
+
+    <div class="col-lg-12" style="margin:auto;float: none;">
+      <section class="box" style="border-left: 3px solid #e77512;">
+        <header class="panel_header">
+          <h2 class="title pull-left">Recent trading activities {{CoinDetail?.coin_name}}</h2>
+          <div class="actions panel_actions pull-right">
+            <a class="box_toggle fa fa-chevron-down"></a>
+            <!-- <a class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></a> -->
+            <!-- <a class="box_close fa fa-times"></a> -->
+          </div>
+        </header>
+        <div class="content-body">
+          <div class="row">
+            <div class="col-xs-12">
+
+              <div class="table-responsive" data-pattern="priority-columns">
+                <table id="tech-companies-1" class="table table-small-font no-mb table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>Bid</th>
+                      <th>Ask</th>
+                      <th>Coin Name</th>
+                      <th>Coin Value</th>
+                      <th>USD</th>
+                      <th data-priority="1">Buy Price</th>
+                      <th data-priority="1">Sell Price</th>
+                      <th>Buy Fee</th>
+                      <th>Sell Fee</th>
+                      <th>Time</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="CoinDetail" data-target="#recentActivitiesModal" data-toggle="modal">
+                      <!-- <th><i class="fa fa-dot-circle-o complete"></i> Deal number 126515</th> -->
+                      <td>{{CoinDetail?.bid}}</td>
+                      <td>{{CoinDetail?.ask}}</td>
+                      <td>{{CoinDetail?.coin_name}}</td>
+                      <td>{{CoinDetail?.coin_value}}</td>
+                      <td>{{CoinDetail?.usd}}</td>
+                      <td>{{CoinDetail?.buy_price}}</td>
+                      <td>{{CoinDetail?.sell_price}}</td>
+                      <td>{{CoinDetail?.buy_fee}}</td>
+                      <td>{{CoinDetail?.sell_fee}}</td>
+                      <td>{{CoinDetail?.timestamp | date:'yyyy-MM-dd HH:mm a '}}</td>
+                      <!--<td>{{CoinDetail?.timestamp | date:'yyyy-MM-dd HH:mm a z':'+0530'}}</td>-->
+                    </tr>
+
+
+
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Nav tabs -->
+          <div class="card" style="border-radius: 1px;border-left:2.5px solid #e66f30;">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Buy Order</a>
+              </li>
+              <li role="presentation" >
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Sell Order</a>
+              </li>
+              
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                
+              <div role="tabpanel" class="tab-pane active" id="home">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#buyPipe"><i class="fas fa-filter"></i>&nbsp; Filters</a>
+                          </h4>
+                      </div>
+                      <div id="buyPipe" class="panel-collapse collapse">
+                          <div class="panel-body">
+                              
+                              <div class="col-md-6">
+                                  <h3 class="label label-primary">Choose Date  </h3>
+                                  <div>
+                                      <input type="date" name="currency" [(ngModel)]="date_to_compare">
+                                     
+                                  </div>
+                                  
+                              </div>
+                              <div class="col-md-6">
+                                  <h3 class="label label-primary">Sort By  </h3><br>
+                                  <select [(ngModel)]="field" >Sort By
+                                    <option value = "created">Date</option>
+                                    <option value = "fee_amount">Total Amount</option>                      
+                                  </select>
+                              </div>
+                              
+                          </div>
+                          
+                      </div>
+                  </div>
+                <div class="table-responsive" data-pattern="priority-columns">
+                    <p class="h4 text-info text-center noteHeading" ><i class="fas fa-hand-point-right"></i>&nbsp;&nbsp;Click on an order to Change/View Status</p>
+                  <table id="tech-companies-1" class="table table-small-font no-mb table-bordered table-striped">
+                    <thead>
+                      
+                      <tr>
+                        <th>Created</th>
+                        <th>Coin</th>
+                        <th data-priority="1">Amount</th>                        
+                        <th>Transaction No</th>
+                        <th data-priority="3">Amount Fee (USD)</th>
+                        <th data-priority="1">Payment</th>
+                        <th>Wallet Address</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                      <tr (click)="BuyOrderDetails(buy)" data-toggle="modal" data-target="#buyOrderStatusScreenModal" *ngFor="let buy of UserBuyResponse  | searchByDate:date_to_compare | sort : 'created' | sort : field | paginate: { itemsPerPage: 10, currentPage: p } let i = index">
+                        <!-- <th><i class="fa fa-dot-circle-o complete"></i> [hidden]="true"  Deal number 126515</th> -->
+                        <td>{{ buy.created | date:'yyyy-MM-dd HH:mm a' }}</td>
+                        <td>{{ buy.coin }}</td>
+                        <td> {{buy?.amount}}</td>                        
+                        <td *ngIf="(buy.payment=='Western Union' || buy.payment=='Money Gram' || buy.payment=='Ria') && (buy.status==-1)">Upload Transaction No</td>
+                        <td *ngIf="(buy.payment=='Western Union' || buy.payment=='Money Gram' || buy.payment=='Ria' || buy.payment == 'Cash Deposit') && (buy.status==0 || buy.status==1)">{{buy.transaction_no}}</td>
+                        <td *ngIf="(buy.payment=='PaynearMe') && (buy.status==-1)">Awaiting PaynearMe Code</td>
+                        <td *ngIf="(buy.payment=='PaynearMe') && (buy.status==0 || buy.status==1)">{{buy.transaction_no.transaction_no}}</td>
+                        <td *ngIf="(buy.payment=='ACH') && (buy.status==0 || buy.status==1)">Payment Done</td>
+                        <td *ngIf="buy.payment == 'Cash Deposit' && buy.status == -1">null_tr</td>
+                        <td>$ {{buy?.fee_amount}}</td>
+                        <td> {{buy?.payment}}</td>
+                        <td> {{buy?.address}}</td>
+                        <!--
+                                            <td>{{buy.status}}</td>-->
+                        <td *ngIf="buy.status==1" ><p class="text-success">Order Completed</p></td>
+                        <td *ngIf="buy.status==0" class="text-info">Order Processing</td>
+                        <td *ngIf="buy.status==-1" class="text-warning">Order Awaiting from buyer</td>
+                        
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+                <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+
+              </div>
+              <div role="tabpanel" class="tab-pane" id="profile">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#sellPipe"><i class="fas fa-filter"></i>&nbsp; Filters</a>
+                          </h4>
+                      </div>
+                      <div id="sellPipe" class="panel-collapse collapse">
+                          <div class="panel-body">
+                              
+                              <div class="col-md-6">
+                                  <h3 class="label label-primary">Choose Date  </h3>
+                                  <div>
+                                      <input type="date" name="currency" [(ngModel)]="date_to_compare_sell">
+                                     
+                                  </div>
+                                  
+                              </div>
+                              <div class="col-md-6">
+                                  <h3 class="label label-primary">Sort By  </h3><br>
+                                  <select [(ngModel)]="fieldSell" >Sort By
+                                    <option value = "created">Date</option>
+                                    <option value = "fee_amount">Total Amount</option>
+                                                          
+                                  </select>
+                                </div>
+                              
+                          </div>
+                      </div>
+                  </div>
+                <div class="table-responsive" data-pattern="priority-columns">
+                    <p class="h4 text-info text-center noteHeading" ><i class="fas fa-hand-point-right"></i>&nbsp;&nbsp;Click on an order to Change/View Status</p>
+                  <table id="tech-companies-1" class="table table-small-font no-mb table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Created</th>
+                        <th>Coin</th>
+                        <th>Transaction No</th>
+                        <th data-priority="1">Amount</th>
+                        <th data-priority="3">Amount Fee (USD)</th>
+                        <th data-priority="1">Payment</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                    </thead>
+                    <tbody >
+                      <tr (click)="SellOrderDetails(sell)" data-toggle="modal" data-target="#sellOrderStatusScreenModal" *ngFor="let sell of UserSellResponse | sort : 'created' | sort: fieldSell | searchByDate:date_to_compare_sell | paginate: { itemsPerPage: 10, currentPage: q }; let i = index">
+                        <!-- <th>
+                          <i class="fa fa-dot-circle-o complete"></i> Deal number 126515</th> -->
+                        <td>{{sell.created | date:'yyyy-MM-dd HH:mm a '}}</td>
+                        <td>{{sell?.coin}}</td>
+                        
+                        <td *ngIf="(sell.payment=='Money Gram' || sell.payment=='Western Union' || sell.payment=='Ria') &&(sell.status==-1)">Send Crypto first</td>
+                        <td *ngIf="(sell.payment=='Money Gram' || sell.payment=='Western Union' || sell.payment=='Ria') &&(sell.status==0)">Awaiting from Admin</td>
+                        <td *ngIf="(sell.payment=='Money Gram' || sell.payment=='Western Union' || sell.payment=='Ria') &&(sell.status==1)">{{sell.transaction_no}}</td>
+                        <td *ngIf="(sell.payment=='Wire') &&(sell.status==-1)">Send Crypto first</td>
+                        <td *ngIf="(sell.payment=='Wire') &&(sell.status==0)">Awaiting from Admin</td>
+                        <td *ngIf="(sell.payment=='Wire') &&(sell.status==1)">{{sell.transaction_no}}</td>
+                        <td *ngIf="!(sell.payment=='Wire' || sell.payment=='Money Gram' || sell.payment=='Western Union' || sell.payment=='Ria')">Method Invalid</td>
+                        
+                        <td> {{sell?.amount}}</td>
+                        <td>$ {{sell?.fee_amount}}</td>
+                        <td> {{sell?.payment}}</td>
+                        <td> {{sell?.address}}</td>
+                        
+                        <td *ngIf="sell.status==1" ><p class="text-success">Order Completed</p></td>
+                        <td *ngIf="sell.status==0" class="text-warning">Order Processing</td>
+                        <td *ngIf="sell.status==-1" class="text-info">Order Awaiting</td>
+                        <td>{{sell?.created | date: 'mediumDate'}}</td>
+                      </tr>
+
+
+
+                    </tbody>
+                  </table>
+                </div>
+                <pagination-controls (pageChange)="q = $event" class="my-pagination"></pagination-controls>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- MAIN CONTENT AREA ENDS -->
+
+   
+    
+  </div>
+</section>
+
+<!-- END CONTENT -->
+
+<!--Buy Order Status Screen Model starts -->
+
+<div id="buyOrderStatusScreenModal" class="modal fade " role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-body" style="overflow: auto">
+            <!-- buy order status show dialog starts-->
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            
+            <div class="clearfix"></div>
+            <section class="box has-border-left-3">
+                <!-- <div class="col-xs-12 col-md-8 col-md-offset-2">
+                    <h3 class="mb text-center"></h3>
+                </div> -->
+              <div class="content-body">
+                <div class="row" *ngIf="buyPaymentTitle=='Western Union' || buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram'">
+                  <div class="" *ngIf="showBuyOrderStatusResponse.status==-1">
+                    <div class="">
+                    <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text "><span class="text-warning">&nbsp;&nbsp;<i class="fas fa-exclamation-circle"></i></span>&nbsp;&nbsp;Order Awaiting Payment from Buyer</span>
+                    </div> 
+                    <br>
+                    <form [formGroup]="uploadBuyTrNoForm" novalidate>
+                        <div class="form-group">
+                            <label for="buyOrdertr">Upload Money Control Number/Transaction Number</label><br>
+                            <span *ngIf="transaction_noWire.invalid && (transaction_noWire.dirty || transaction_noWire.touched) || (transaction_noWire.invalid && trNoBoolean)" style="color: red;">Please Upload Money Control Number/Transaction Number </span>
+                            <input type="text" class="form-control" id="buyOrdertr" placeholder="Enter Control Number/Transaction Number" name="buyOrderStatusTr" formControlName="transaction_no" style="color: black;"> 
+                        </div> 
+                    </form>
+                  </div>
+                  <div class="" *ngIf="showBuyOrderStatusResponse.status==0">
+                    <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text"><span class="text-info">&nbsp;&nbsp;<i class="fas fa-hourglass-start"></i></span>&nbsp;&nbsp;Order Processing</span>
+                    <!-- <p class="text text-info h3" style="align-content: center;">Order Processing</p> -->
+                  </div>
+                  <div class="" *ngIf="showBuyOrderStatusResponse.status==1">
+                    <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text"><span class="text-success">&nbsp;&nbsp;<i class="far fa-check-circle"></i></span>&nbsp;&nbsp; Order Completed</span>
+                    <!-- <p class="text text-success h3" style="align-content: center;">Order Completed</p> -->
+                  </div>
+                </div>
+               <div class="row" *ngIf="(buyPaymentTitle=='Western Union' || buyPaymentTitle=='Ria' || buyPaymentTitle=='Money Gram') && (showBuyOrderStatusResponse.status==-1)">
+                  <div class="">
+                      <button type="button" class="btn btn-success" style="border-radius: 5px;" (click)="UploadTransactionNumberForWURiaMoney()"><i class="fas fa-upload"></i>&nbsp;&nbsp;Upload</button>
+                  </div>
+              </div>
+              <div class="row" *ngIf="buyPaymentTitle == 'Cash Deposit'">
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==-1">
+                    <p class="text text-info h3" style="align-content: center;">Order Awaiting Payment from Buyer</p>
+                    <br>
+                    <form>
+                      <div class="form-group">
+                        <label for="receipt">Upload Cash Deposit Receipt</label>
+                        <input type="file" class="form-control" id="receipt" style="color: black;" (change)="handlefileInput($event.target.files)">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-xs-12 col-md-6 col-md-offset-3" *ngIf="showBuyOrderStatusResponse.status==0">
+                    <p class="text text-info h3" style="align-content: center;">Order Processing</p>
+
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="( buyPaymentTitle=='Cash Deposit' && showBuyOrderStatusResponse.status==-1)">
+                  <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-lg-3 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                    <button type="button" class="btn btn-primary btn-lg mt-20 has-gradient-to-right-bottom" style="width:80%; align-content: center;"
+                      (click)="UploadReceipt()" [disabled]="!fileToUpload">Upload</button>
+                  </div>
+                </div>
+ 
+                <div class="row" *ngIf="buyPaymentTitle=='PaynearMe'">
+                  <div class="" *ngIf="showBuyOrderStatusResponse.status==-1">
+                      <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text"><span class="text-warning">&nbsp;&nbsp;<i class="fas fa-exclamation-circle"></i></span>&nbsp;&nbsp;Order Awaiting Code</span>
+                      <!-- <p class="text text-info h3" style="align-content: center;">Order Awaiting Code</p> -->
+                      <br>
+                      <p>
+                          Your PayNearMe code for this order will be generated soon!
+                      </p>
+                  </div>
+                  <div class="" *ngIf="showBuyOrderStatusResponse.status==-1 && showBuyOrderStatusResponse.transaction_no">
+                      <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text text-info"><span class="text-warning">&nbsp;&nbsp;<i class="fas fa-exclamation-circle"></i></span>&nbsp;&nbsp;Order Awaiting Code</span>
+                    <!-- <p class="text text-info h3" style="align-content: center;">Order Awaiting Code</p> -->
+                    <br>
+                    <p>
+                        Make Payment to PaynearMe with PaynearMe Code {{showBuyOrderStatusResponse.transaction_no}}
+                    </p>
+                </div>
+                </div>
+                <div class="row" *ngIf="buyPaymentTitle=='ACH'">
+                  <div class="" >
+                      <span class="buySpan">BUY ORDER STATUS : </span><span class="statusSpan text"><span class="text-info">&nbsp;&nbsp;<i class="fas fa-hourglass-start"></i></span>&nbsp;&nbsp;Order Processing</span>
+                      <!-- <p style="align-content: center;" class="text text-info h3">Order Processing</p>  -->
+                  </div> 
+                </div>
+                <div class="row">
+                  <div class="col-md-10 col-md-offset-1">
+                    <p class="text h3 card-header">Order Details</p>
+                  </div>
+                </div>
+                <div class="row" *ngIf="buyPaymentTitle">
+                  <div class=" cardOrders">
+                    <p><span class="orderCardLabel">Payment Method : </span>{{buyPaymentTitle}}</p>
+                    <p><span class="orderCardLabel">Currency : </span>{{showBuyOrderStatusResponse.coin}}</p>
+                    <p><span class="orderCardLabel">Address Receiving Cryptocurrency : </span>{{showBuyOrderStatusResponse.address}}</p>
+                    <p><span class="orderCardLabel">Amount of Currency Bought : </span>{{showBuyOrderStatusResponse.amount}}</p>
+                    <p><span class="orderCardLabel">Total Amount paid (USD) :</span> ${{showBuyOrderStatusResponse.fee_amount}}</p>
+                    <div class="transCardIcon"><i class="fas fa-dollar-sign"></i></div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="(buyPaymentTitle=='ACH') && (achInfo && achInfo.achName)">
+                    <p class="text  h3 card-header">ACH Payment Details</p>
+                    <div class=" cardOrders">
+                      <p><span class="orderCardLabel">Name :</span> {{achInfo.achName}}</p>
+                      <p><span class="orderCardLabel">Routing Number : </span>{{achInfo.achRoutingNumber}}</p>
+                      <p><span class="orderCardLabel">Bank Name :</span> {{achInfo.achBankName}}</p>
+                      <p><span class="orderCardLabel">Account Number : </span>{{achInfo.achAccountNumber}}</p>
+                      <div class="transCardIcon"><i class="fas fa-dollar-sign"></i></div>
+                    </div>
+                </div>
+                
+                
+              </div>
+            </section>
+          </div>
+          <!-- buy order status show dialog ends-->
+          </div>
+        </div>
+        
+  </div>
+</div>
+
+<!--Buy Order Status Screen Model Model ends -->
+
+
+
+<!--Sell Order Status Screen Model starts -->
+
+<div id="sellOrderStatusScreenModal" class="modal fade " role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body" style="overflow: auto">
+          <!-- sell order status show dialog starts-->
+         <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="showSellOrderStatusResponse">
+            
+            <div class="clearfix"></div>
+            <section class="box has-border-left-3">
+                <!-- <div class="col-xs-12 col-md-10 col-md-offset-1">
+                    <h2 class="mb text-center bold">Sell Order Status</h2>
+                </div> -->
+              <div class="content-body">
+                <div class="row">
+                  <div class="" *ngIf="showSellOrderStatusResponse.status==-1">
+                    <span class="buySpan">Sell Order Status:</span><span class="statusSpan"><span class="text-warning"><i class="fas fa-exclamation-circle"></i>&nbsp;&nbsp;</span> Order Awaiting Crypto Deposit. Please send your crypto to this address: <b>{{showSellOrderStatusResponse.address}}</b></span>
+                    <!-- <p class="text text-danger h3" style="align-content: center;">Order Awaiting Crypto Deposit. Please send your crypto to this address: {{showSellOrderStatusResponse.address}}</p> -->
+                     
+                  </div>
+                  <div class="" *ngIf="showSellOrderStatusResponse.status==0">
+                    <p class="text h3" style="align-content: center;" *ngIf="sellPaymentTitle=='Wire'">
+                        <span class="buySpan">Sell Order Status:</span><span class="statusSpan"><span class="text-info">&nbsp;&nbsp;<i class="far fa-clock"></i>&nbsp;&nbsp;</span> You will get your Wire Reference Number Soon.</span>
+                      <!-- You will get your Wire Reference Number Soon. -->
+                    </p>
+                    <p class="text h3" style="align-content: center;" *ngIf="(sellPaymentTitle=='Western Union' || sellPaymentTitle=='Money Gram' || sellPaymentTitle=='Ria')">
+                        <span class="buySpan">Sell Order Status:</span><span class="statusSpan"><span class="text-info">&nbsp;&nbsp;<i class="far fa-clock"></i>&nbsp;&nbsp;</span>You will get your Money Control Number Soon.</span>
+                        <!-- You will get your Money Control Number Soon. -->
+                    </p>
+                  </div>
+                  <div class="" *ngIf="showSellOrderStatusResponse.status==1">
+                      <span class="buySpan">Sell Order Status: </span><span class="statusSpan"><span class="text-success">&nbsp;&nbsp;<i class="fas fa-check-circle"></i>&nbsp;&nbsp;</span>  Order Complete</span>
+                      <!-- <p class="text text-success h3" style="align-content: center;" >
+                        Order Complete
+                      </p> -->
+                      
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <h3 style="align-content: center;" class="text card-header">Order Details</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="cardOrders">
+                    <p><span class="orderCardLabel">Payment Method :</span> {{sellPaymentTitle}}</p>
+                    <p><span class="orderCardLabel">Currency :</span> {{showSellOrderStatusResponse.coin}}</p>
+                    <p><span class="orderCardLabel">Address for sending Cryptocurrency :</span> {{showSellOrderStatusResponse.address}}</p>
+                    <p><span class="orderCardLabel">Amount of Cryptocurrency sold : </span>{{showSellOrderStatusResponse.amount}}</p>
+                    <p><span class="orderCardLabel">Total Amount you will get paid (USD) : </span>${{showSellOrderStatusResponse.fee_amount}}</p>
+                    <div class="transCardIcon"><i class="fas fa-dollar-sign"></i></div>
+                  </div>
+                </div>
+                <div class="row" *ngIf="sellPaymentTitle=='Wire' && wireInfo">
+                    <h3 style="align-content: center;" class="text card-header" *ngIf="wireInfo.wireName || wireInfo.wireAddress || wireInfo.wireBankName || wireInfo.wireBankRoutingNumber || wireInfo.wireBankAddress || wireInfo.wireBankSwiftCode">Wire Payment Details where you will get paid</h3>
+                    <div class="cardOrders" *ngIf="wireInfo.wireName || wireInfo.wireAddress || wireInfo.wireBankName || wireInfo.wireBankRoutingNumber || wireInfo.wireBankAddress || wireInfo.wireBankSwiftCode">
+                      
+                      <p><span class="orderCardLabel">Name : </span>{{wireInfo.wireName}}</p>
+                      <p><span class="orderCardLabel">Address :</span> {{wireInfo.wireAddress}}</p>
+                      <p><span class="orderCardLabel">Bank Name :</span> {{wireInfo.wireBankName}}</p>
+                      <p><span class="orderCardLabel">Bank Routing Number :</span> {{wireInfo.wireBankRoutingNumber}}</p>
+                      <p><span class="orderCardLabel">Bank Address :</span> {{wireInfo.wireBankAddress}}</p>
+                      <p><span class="orderCardLabel">Bank Swift Code : </span>{{wireInfo.wireBankSwiftCode}}</p>
+                      <div class="transCardIcon"><i class="fas fa-dollar-sign"></i></div>
+                    </div>
+                </div>
+                
+                
+              </div>
+            </section>
+          </div>
+          <!-- sell order status show dialog ends--> 
+        </div>
+      </div>
+         
+    </div>
+  </div>
+  
+<!--Sell Order Status Screen Model Model ends -->
+
+

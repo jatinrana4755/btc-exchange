@@ -1,0 +1,200 @@
+<!-- START CONTENT -->
+<section id="main-content" class=" ">
+    <div class="wrapper main-wrapper row" style=''>
+
+        <div class="col-lg-12" style="margin:auto;float: none;">
+            <div class="row">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><i class="fas fa-filter"></i>&nbsp; Filters</a>
+                        </h4>
+
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="selected-filters">
+                                <small class="filters-small" *ngIf="coin_name">{{coin_name}} </small>
+                                <small class="filters-small" *ngIf="selectedPaymentMethods">{{selectedPaymentMethods}}</small>
+                            </div>
+                            <div class="col-md-3">
+                                <h5>Crypto Currency</h5>
+                                <div>
+                                    <input type="radio" name="currency" id="BTC" [(ngModel)]="coin_name" value="BTC">
+                                    <label for="BTC">Bitcoin</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" name="currency" id="ETH" [(ngModel)]="coin_name" value="ETH">
+                                    <label for="ETH">Ethereum</label><br>
+                                </div>
+                                <div>
+                                    <input type="radio" name="currency" id="none" [(ngModel)]="coin_name" value="">
+                                    <label for="none">none</label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Payment Methods</h5>
+                                <div class="col-md-6" *ngFor="let method of paymentMethods">
+                                    <input type="radio" name="paymentMethods" id="{{method.title}}" [(ngModel)]="selectedPaymentMethods" [value]="method.title">
+                                    <label for="{{method.title}}">{{method.title}}</label><br>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" name="paymentMethods" id="none" [(ngModel)]="selectedPaymentMethods" value="">
+                                    <label for="none">None</label><br>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <h5>CryptoCurreny Range</h5>
+                                <div class="form-group">
+                                    <label for="minCryptRange">Min</label>
+                                    <input type="number" name="" id="minCryptRange" class="form-control" [(ngModel)]="min">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxCryptRange">Max</label>
+                                    <input type="number" name="" id="maxCryptRange" class="form-control" [(ngModel)]="max">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="h4 text-info text-center noteHeading"><i class="fas fa-hand-point-right"></i>&nbsp;&nbsp;Click on an order to Change/View Status</p>
+            <section class="box" style="border-left: 3px solid #e77512;">
+                <!-- <div class="loader" *ngIf="loading"></div> -->
+                <header class="panel_header">
+                    <h2 class="title pull-left">Buy Orders</h2>
+                </header>
+
+                <div class="content-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <div class="table-responsive" data-pattern="priority-columns">
+                                <table id="tech-companies-1" class="table table-small-font no-mb table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Created</th>
+                                            <th>User</th>
+                                            <th>Currency</th>
+                                            <th>Amount Bought</th>
+                                            <th>Buy Fee</th>
+                                            <th>Total (in USD)</th>
+                                            <th>Payment Method</th>
+                                            <th>Address</th>
+                                            <th>Status</th>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let detail of details | orderBy : 'payment_name' : selectedPaymentMethods | orderBy :'coin_name': coin_name | price : 'fee_ammount' : min : max| paginate: { itemsPerPage: 10, currentPage: p }"
+                                            data-target="#myModal" data-toggle="modal" style="cursor: pointer" (click)="saveBuyOrder(detail)">
+                                            <td>{{detail.created}}</td>
+                                            <td>{{detail.username}}</td>
+                                            <td>{{detail.coin_name}}</td>
+                                            <td>{{detail.amount}}</td>
+                                            <td>{{detail.fee}}</td>
+                                            <td>{{detail.fee_ammount}}</td>
+                                            <td>{{detail.payment_name}}</td>
+                                            <td>{{detail.address}}</td>
+                                            <td *ngIf="detail.status == 0">Processing</td>
+                                            <td *ngIf="detail.status == 1">Completed</td>
+                                            <td *ngIf="detail.status == -1">Order Awaiting</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- MAIN CONTENT AREA ENDS -->
+    </div>
+</section>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+        </div> -->
+        <div class="modal-content" style="border-radius: 5px;">
+            <div class="modal-body" *ngIf="selectedBuyOrder">
+                <h4 class="modal-title" style="text-align: center;margin-bottom: 30px;"><b>Buy Order Status</b></h4>
+                <div class="row">
+                    <div class="col-xs-12 col-md-8 col-md-offset-2">
+                        <form [formGroup]="uploadBuyTrNoForm">
+                            <div class="form-group statusRadioDiv" *ngIf="!statusDisabled">
+                                <label class="radio-container">
+                                    <p class="radioLabel">Order Awaiting</p> 
+                                    <input type="radio" [(ngModel)]="currentStatus" class="radioStatus" name="status" value="-1" formControlName="status" [checked]="currentStatus == -1" readOnly>   
+                                    <span class="checkmark"></span>                         
+                                </label>
+                                <label class="radio-container">
+                                    <span class="radioLabel">Processing</span> 
+                                    <input type="radio" [(ngModel)]="currentStatus" class="radioStatus" name="status" value="0" formControlName="status" [checked]="currentStatus == 0">      
+                                    <span class="checkmark"></span>                  
+                                </label>
+                                <label class="radio-container">
+                                    <span class="radioLabel">Completed</span> 
+                                    <input type="radio" [(ngModel)]="currentStatus" class="radioStatus" name="status" value="1" formControlName="status" [checked]="currentStatus == 1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <!-- <div *ngIf="currentStatus == -1"> Order Awaiting</div>
+                                <div *ngIf="currentStatus == 1">completed</div>
+                                <div *ngIf="currentStatus == 0">Processing</div> -->
+                            </div>
+                            <div class="form-group" *ngIf="this.currentPayment == 'PaynearMe'">
+                                <label for="methods">PayNearMe Code</label>
+                                <input type="text" class="form-control" id="methods" formControlName="transaction_no" name="address" (keyup)="changeStatus($event.target.value)">
+                            </div>
+                            <div class="row" *ngIf="!statusDisabled">
+                                <div class="col-md-12" style="text-align: center">
+                                    <button type="button" class="btn btn-success " style="border-radius: 5px;margin-bottom: 20px;" (click)="onSubmit()" data-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h3 style="align-content: center;" class="text heading-modal">Order Details</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 card-view">
+                        <p><span class="lebel-card-order">Payment Method :</span> {{this.currentPayment}}</p>
+                        <p><span class="lebel-card-order">Currency : </span>{{selectedBuyOrder.coin_name}}</p>
+                        <p><span class="lebel-card-order">Address Receiving Cryptocurrency :</span> {{selectedBuyOrder.address}}</p>
+                        <p><span class="lebel-card-order">Amount of Currency Bought : </span>{{selectedBuyOrder.amount}}</p>
+                        <p><span class="lebel-card-order">Total Amount paid (USD) :</span> ${{selectedBuyOrder.fee_ammount}}</p>
+                        <div class="transCardIcon"><i class="fas fa-dollar-sign"></i></div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="WuDetails">
+                    <div class="col-md-offset-2">
+                        <h3 style="align-content: center;" class="text heading-modal">Western Union Details</h3>
+                    </div>
+                    <div class="row">
+                        <div class="center"><i class="fa fa-spin fa-spinner" *ngIf="wuLoading" style="font-size:50px;"></i></div>
+                        <div class="col-md-8 col-md-offset-2" *ngIf="!wuLoading">
+                            <div *ngFor="let key of keyArr">
+                            <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[key]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- END CONTENT -->

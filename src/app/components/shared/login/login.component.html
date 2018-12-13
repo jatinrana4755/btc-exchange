@@ -1,0 +1,317 @@
+<div style="background-image:url('assets/images/login-bg4.jpg');background-position: center;background-repeat: no-repeat;background-size: cover;margin: 0px;padding: 0px;">
+  <app-header></app-header>
+  <div class="container" style="margin-bottom: 10px;padding-bottom: 10px;">
+
+    <div class="row" style="margin-top: 80px;">
+      <div class="col-md-6 col-xs-12 " style="margin: auto;float: none">
+        <!-- Nav tabs -->
+        <div class="row">
+          <div class="col-sm-12" style="min-height: auto;background-color:transparent;padding: 40px;border-radius:5px;border:10px snow; margin-top: 44px;margin-bottom: 20px;">
+            <ul class="nav nav-tabs" style="border:none;">
+              <li (click)="SignInAvtive()" class="nav-item">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab" (click)="SignInAvtive()">
+                  <p [ngClass]="{'activeTab': signInActive}">Sign In</p>
+                </a>
+              </li>
+              <li class="nav-item" (click)="SignUpActive()">
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" (click)="SignUpActive()">
+                  <p [ngClass]="{'activeTab': !signInActive}">Sign Up</p>
+                </a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content " style="text-align:left;border:none;padding: 45px 55px;border-top: none;border-radius: 0 5px 5px 5px;background-color: rgba(255, 68, 0, 0.473);">
+              <div role="tabpanel" class="tab-pane active " id="home">
+                <form>
+
+                  <div class="form-group input-group">
+                    <!--<label for="username">Username</label>-->
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+
+                    <input type="text" [(ngModel)]="username" class="form-control" id="username" placeholder="Username" name="username">
+                  </div>
+                  <br>
+                  <div class="form-group input-group">
+                    <!--<label for="username">Username</label>-->
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+
+                    <input type="password" [(ngModel)]="password" class="form-control" id="password" placeholder="Password" name="password">
+                  </div>
+
+                  <div class="checkbox">
+                    <label>
+                        <input type="checkbox" style="margin-top: 6px;"> Keep Me Logged In
+                        </label>
+                  </div>
+                  <button type="submit" (click)="loginUser()" class="btn btn-warning " style="margin-top:10px;border-radius: 5px;width: 100%;position:relative">SIGN IN
+                    <i *ngIf="loading" class="fa fa-spinner fa-spin position " style="font-size: 25px;position: absolute;right: 10px;top: 5px;margin: 0;"></i>
+                    </button>
+                </form>
+
+
+              </div>
+
+              <div role="tabpanel" class="tab-pane" id="profile">
+
+                <form [formGroup]="newUserForm" (ngSubmit)="registerUser()" novalidate>
+
+                  <div class="form-group input-group">
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="text" class="form-control" id="registerUsername" placeholder="Username" name="registerUsername" formControlName="registerUsername">
+                  </div>
+                  <!-- <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="alert alert-warning">This field is required</div> -->
+                  <br>
+                  <div class="form-group input-group">
+
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="text" class="form-control" id="registerName" placeholder="Name" name="registerName" formControlName="registerName"
+                      required>
+                  </div><br>
+
+
+                  <div class="form-group input-group">
+
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-phone"></span>
+                    </span>
+                    <input type="number" class="form-control" id="registerMobile" placeholder="Mobile Number" name="registerMobile" formControlName="registerMobile"
+                      required>
+                  </div><br>
+
+                  <div class="form-group input-group">
+
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                    </span>
+                    <input type="email" class="form-control" id="registerEmail" placeholder="Email" name="registerEmail" formControlName="registerEmail"
+                      (blur)="outOfEmailField = true" (focus)="outOfEmailField = false">
+                  </div>
+                  <div *ngIf="email.errors && (email.dirty || email.touched) && outOfEmailField" class="alert alert-warning">Please enter a valid email id</div>
+                  <br>
+                  <div class="form-group input-group">
+
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </span>
+                    <input type="text" class="form-control" id="registerAddress" placeholder="Address" name="registerAddress" formControlName="registerAddress">
+                  </div><br>
+                  <div *ngIf="url">
+                    <img class="img-responsive" [src]="url" height="120px"> <br/></div>
+                  <div class="form-group input-group">
+
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-upload"></span>
+                    </span>
+                    <input type="file" class="form-control" id="registerID_Proof" #file (change)="onChangeImage($event)" placeholder="ID Proof"
+                      name="registerID_Proof">
+                  </div><br>
+
+
+                  <div class="form-group input-group">
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    <input type="password" class="form-control" id="registerPassword" placeholder="Password (Minimum 8 characters)" name="registerPassword"
+                      formControlName="registerPassword" (blur)="outOfField = true" (focus)="outOfField = false">
+                  </div>
+                  <div *ngIf="Password.errors && (Password.dirty || Password.touched) && outOfField" class="alert alert-warning">This password should be at least 8 characters</div>
+                  <br>
+
+                  <div class="form-group input-group">
+                    <span class="input-group-addon" style="background-color:rgba(255, 68, 0, 0.658); color: white;">
+                                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Confirm Password" name="registerConfirmPassword"
+                      [(ngModel)]="registerConfirmPassword" [ngModelOptions]="{standalone: true}">
+                  </div>
+                  <br>
+                  <div class="row form-group">
+                    <!--  <div class="col-md-2">
+                                          <label>Captcha</label>
+                                        </div> -->
+                    <div class="col-md-12">
+                      <re-captcha (resolved)="resolved($event)" siteKey="6Lfn_lkUAAAAAHRxd7hvuyvz1QYE1yPw02M7uHUi"></re-captcha>
+                      <!--siteKey="6LcGe1wUAAAAAC9i8n8zbGxe3Wm6z6PZiXpEIBwp" for localhost-->
+                      <!--siteKey="6Lfn_lkUAAAAAHRxd7hvuyvz1QYE1yPw02M7uHUi" for server -->
+
+                      <!-- <div class="g-recaptcha" data-sitekey="6Lfn_lkUAAAAAHRxd7hvuyvz1QYE1yPw02M7uHUi"></div> -->
+
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-warning" style="margin-top: 28px;border-radius: 25px;width:100%;position: relative" [disabled]="newUserForm.invalid">SIGN UP  
+                         <i  *ngIf="loading"  class="fa fa-spinner fa-spin position " style="font-size: 25px;position: absolute;right: 10px;top: 5px;margin: 0;" ></i> </button>
+                </form>
+              </div>
+
+            </div>
+            <a style="color: white; display: block;cursor: pointer; align-content:center; margin-top: 28px;border-radius:5px;width:100%;"
+              data-toggle="modal" data-target="#forgetPasswordModal">
+                <i class="fas fa-lock"></i> &nbsp; Forget Password ?</a>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ======================================= 
+      ==Start footer section==  
+      =======================================-->
+<section class="main-footer footer-style-two text-center" id="contact" style="margin-top: -10px;">
+  <!--Widgets Section-->
+  <div class="widgets-section">
+    <div class="container">
+
+      <div class="row clearfix">
+        <!--Footer Column-->
+        <div class="footer-column col-md-4 col-sm-6 col-xs-12">
+          <div class="footer-widget about-widget">
+            <h3 class="has-line-center">About us</h3>
+            <div class="widget-content">
+              <div class="text">btc exchange is Powerful and Complete Solution for your Crypto Currencies ICO start up business.Now you can
+                Easily Start an ICO website in just a few adjustmets </div>
+              <ul class="social-links">
+                <li>
+                  <a href="#">
+                    <span class="fa fa-facebook-f"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="fa fa-twitter"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="fa fa-google-plus"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="fa fa-linkedin"></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span class="fa fa-instagram"></span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--End Footer Column-->
+
+        <!--Footer Column-->
+        <div class="footer-column col-md-4 col-sm-6 col-xs-12">
+          <div class="footer-widget contact-widget">
+            <h3 class="has-line-center">Contact Us</h3>
+            <div class="widget-content">
+              <ul class="contact-info">
+                <li>
+                  <div class="icon">
+                    <span class="ui-computer-screen-2"></span>
+                  </div>
+                </li>
+                <li>10, Mc Donald Avenue, Sunset Park, Newyork</li>
+                <li>+99 999 9999</li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--End Footer Column-->
+
+        <!--Footer Column-->
+        <div class="footer-column col-md-4 col-sm-12 col-xs-12">
+          <div class="footer-widget newsletter-widget">
+            <h3 class="has-line-center">Newsletter</h3>
+            <div class="widget-content">
+              <div class="text">Stay Updated with our latest news. We promise not to spam</div>
+              <div class="newsletter-form">
+                <form method='post'>
+                  <input type='hidden' name='form-name' value='form 1' />
+                  <div class="form-group">
+                    <input type="email" name="field-name" value="" placeholder="Your Email" required="">
+                    <button type="submit" class="send-btn">
+                      <span class="fa fa-paper-plane-o"></span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--End Footer Column-->
+
+      </div>
+    </div>
+  </div>
+
+</section>
+<!-- ======================================= 
+            ==End footer section==  
+            =======================================-->
+
+
+
+<div class="copyright">
+  <h4 class="text-center"> Copyright © 2018. All rights reserved.</h4>
+</div>
+
+<!-- pre loader  
+        <div class="preloader"></div>
+        -->
+<a class="btn-lg scrollup">
+  <i class="fa fa-arrow-up"></i>
+</a>
+<!-- 
+        <script src="assets/js/plugins.js"></script>
+        <script src="assets/js/custom.js"></script>
+          -->
+
+
+
+<!--Forget Password Model starts -->
+<div id="forgetPasswordModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content" >
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Forget Password Details ?</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="methods">Username</label>
+            <input type="text" name="forgetUsername" class="form-control" id="forgetUsername" [(ngModel)]="forgetUsername" required placeholder="Name">
+          </div>
+          <div class="form-group">
+            <label for="methods">Email</label>
+            <input type="email" name="forgetEmail" class="form-control" id="forgetEmail" [(ngModel)]="forgetEmail" required placeholder="Email">
+          </div>
+          <div class="form-group">
+            <button type="submit" style="margin-top:10px;border-radius: 50px;width: 100%;" class="btn btn-warning" data-dismiss="modal"
+              (click)="ForgetPassword()"> &nbsp; Send Email</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--forget Password Model ends -->

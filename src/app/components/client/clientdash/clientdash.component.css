@@ -1,0 +1,82 @@
+.profile-btn {
+  border-radius: 25px;
+  text-transform: capitalize;
+  background: #f7a355 !important;
+  color: #ffffff;
+  /* box-shadow: 2px 2px 5px #ca602e!important; */
+  outline: none;
+}
+
+.page-sidebar {
+  box-shadow: none;
+}
+
+.footer-sidenav {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.buy-sell-head {
+  font-size: 14px;
+  font-weight: bold;
+  /* text-shadow: 2px 2px 5px #eaaa54; */
+  transition: 0.3s;
+  margin-right: 25px;
+}
+
+.buy-sell-head:hover {
+  text-shadow: none;
+  color: #e77512;
+  transform: translate(2px, 2px);
+  text-decoration: none;
+}
+
+.footer-sidenav li {
+  font-size: 11px;
+  list-style: none;
+  margin: 6px;
+  font-weight: 400;
+  color: #898989
+}
+
+.page-topbar {
+  background: #fff !important;
+}
+
+.wraplist .active {
+  background-color: rgba(33, 33, 33, 0.1);
+  border-left: 4px solid #e77512 !important;
+}
+.wraplist li{
+    cursor: pointer;
+}
+.icon-group {
+  display: flex;
+}
+
+.icon-group .icon {
+  margin: 10px;
+  width: 25px;
+  padding-top: 5vh;
+  cursor: pointer;
+}
+
+.social-link:hover {
+  background: none !important;
+  border: none !important;
+}
+
+.userLogo {
+  text-transform: uppercase;
+  background: #e8962e;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 35px;
+  /* padding: 9px; */
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+}

@@ -1,0 +1,72 @@
+h1,h2,h3,h4,h5,h6,p{
+
+    font-family: 'Open Sans', sans-serif;
+}
+.bounce:hover {
+-webkit-animation-name: bounce;
+animation-name: bounce;
+-webkit-transform-origin: center bottom;
+transform-origin: center bottom;
+}
+.section-thief{
+    background: #f16116;
+    padding: 80px 0 60px 0;
+    overflow: auto;
+}
+.home-thief-p{
+    text-align: center;
+    width: 85%;
+    margin: 15px auto 0;
+}
+/* .navbar-brand img{
+    width: 110px;
+    height: auto!important;
+    border-radius: 25px;
+} */
+.card-img{
+    width: 85px!important;
+    margin-bottom: 20px;
+}
+.card-div p{
+    font-size:12px;
+    font-weight: 600;
+}
+.main-header.demo1{
+    background:  radial-gradient(#eaa21c,#f97a2f)!important;
+}
+.scrollup{
+    bottom: 6px!important;
+    right: 150px!important;
+}
+.nav-base.dark[_ngcontent-c1] #navigation[_ngcontent-c1] ul[_ngcontent-c1] li[_ngcontent-c1] a.btn[_ngcontent-c1]{
+    background-color:#ff9437;
+}
+/* .nav-base.dark.mini-nav .nav-base.dark[_ngcontent-c1] #navigation[_ngcontent-c1] ul[_ngcontent-c1] li[_ngcontent-c1] a.btn[_ngcontent-c1]{
+    background-color:#ff9437;
+} */
+
+@-webkit-keyframes flash {
+from,
+50%,
+to {
+opacity: 1;
+}
+
+25%,
+75% {
+opacity: 0;
+}
+}
+
+@keyframes flash {
+from,
+50%,
+to {
+opacity: 1;
+}
+
+25%,
+75% {
+opacity: 0;
+}
+}

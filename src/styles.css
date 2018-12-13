@@ -1,0 +1,108 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    min-width: auto !important;
+}
+input[type=text]{
+    color: #ddd;
+}
+input[type=text]:focus{
+    color: #333;
+}
+.alert-message{
+    display: none;
+    transition: 0.3s;
+}
+
+.fade.in{
+    background:rgba(0,0,0,.6) !important;
+}
+.loader {
+  height: 4px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+}
+.loader:before{
+  display: block;
+  position: absolute;
+  content: "";
+  left: -200px;
+  width: 200px;
+  height: 4px;
+  background: linear-gradient( #e8962e, #e45131);
+  animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    from {left: -200px; width: 30%;}
+    50% {width: 30%;}
+    70% {width: 70%;}
+    80% { left: 50%;}
+    95% {left: 120%;}
+    to {left: 100%;}
+}
+.modal-backdrop.show{
+    display: none !important;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #ddd; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color:#ccc;
+    ; 
+}
+.page-sidebar{
+    min-height: 90%;
+}
+.card-view{
+    padding: 20px 40px;
+    border-radius: 5px;
+    position: relative;
+    color: #fff;
+    background:linear-gradient(to right bottom, #e8962e, #e45131);
+    margin-bottom: 35px;
+    overflow: hidden;
+  }
+  .transCardIcon{
+    position: absolute;
+      right: -30px;
+      top: 0;
+      color: rgba(80, 64, 48, 0.11);
+      font-size: 200px;
+      /* transform: rotateY(180deg); */
+  }
+.noteHeading{
+    text-transform: uppercase;
+    font-size: 14px;
+    text-align: left;
+    /* font-weight: bold; */
+    padding: 10px;
+    color: #ffffff;
+    background: linear-gradient(45deg,#e77512,#ffa707);
+    border-left: 3px solid #c75419;
+}
+.table-striped>tbody>tr{
+    background: #fff;
+    transition: 0.3s;
+    border: none;
+}
+.table-striped>tbody>tr:nth-child(odd){
+    background: #f9f9f9;
+}
+.table-striped>tbody>tr:hover{
+    background: #f0f0f0;
+    color: #555;
+    transform: scale(0.997);
+}

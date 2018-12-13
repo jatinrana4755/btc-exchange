@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BtcEthExchange</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+<script src="assets/js/offline.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+
+<!-- CORE CSS FRAMEWORK - START -->
+<link href="assets/plugins/pace/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/plugins/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link href="assets/fonts/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="assets/fonts/webfont/cryptocoins.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/animate.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/animate.css" rel="stylesheet" type="text/css" />
+<link href="assets/plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+<!-- CORE CSS FRAMEWORK - END -->
+
+<!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - START -->
+
+<link href="assets/plugins/jvectormap/jquery-jvectormap-2.0.1.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="assets/plugins/morris-chart/css/morris.css" rel="stylesheet" type="text/css" media="screen" />
+
+<!-- HEADER SCRIPTS INCLUDED ON THIS PAGE - END -->
+<link href="assets/css/offline-theme-default.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/offline-language-english.css" rel="stylesheet" type="text/css" />
+<!-- CORE CSS TEMPLATE - START -->
+<link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+<link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
+<!-- CORE CSS TEMPLATE - END -->
+
+<script>
+  Offline.options = {checks: {xhr: {url: '/home'}}};
+var run = function(){
+  if (Offline.state === 'up')
+  Offline.check();
+  }
+  setInterval(run, 5000);
+</script>
+
+
+</head>
+<body>
+  <app-root></app-root>
+  
+  <!-- LOAD FILES AT PAGE END FOR FASTER LOADING -->
+
+    <!-- CORE JS FRAMEWORK - START -->
+    <script src="assets/js/jquery-1.11.2.min.js"></script>
+    
+    <script src="assets/js/jquery.easing.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+    <script src="assets/plugins/pace/pace.min.js"></script>
+    <script src="assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="assets/plugins/viewport/viewportchecker.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="assets/js/jquery-1.11.2.min.js"><\/script>');
+    </script>
+    <!-- CORE JS FRAMEWORK - END -->
+    
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+
+    <script src="assets/plugins/echarts/echarts-custom-for-dashboard.js"></script>
+
+    <script src="assets/plugins/flot-chart/jquery.flot.js"></script>
+    <script src="assets/js/chart-flot.js"></script>
+
+    <script src="assets/plugins/morris-chart/js/raphael-min.js"></script>
+    <script src="assets/plugins/morris-chart/js/morris.min.js"></script>
+    <script src="assets/js/chart-morris.js"></script>
+
+    <script src="assets/js/offline.min.js"></script>
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+    <script src="assets/js/plugins.js"></script>
+		<script src="assets/js/custom.js"></script>
+    <!-- CORE TEMPLATE JS - START -->
+    <script src="assets/js/scripts.js"></script>
+    <!-- END CORE TEMPLATE JS - END -->
+</body>
+
+</html>

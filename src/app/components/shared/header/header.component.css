@@ -1,0 +1,41 @@
+h1,h2,h3,h4,h5,h6,p{
+
+    font-family: 'Open Sans', sans-serif;
+}
+.bounce:hover {
+-webkit-animation-name: bounce;
+animation-name: bounce;
+-webkit-transform-origin: center bottom;
+transform-origin: center bottom;
+}
+
+@-webkit-keyframes flash {
+from,
+50%,
+to {
+opacity: 1;
+}
+
+25%,
+75% {
+opacity: 0;
+}
+}
+
+@keyframes flash {
+from,
+50%,
+to {
+opacity: 1;
+}
+
+25%,
+75% {
+opacity: 0;
+}
+}
+.openLink{
+    background-color: #FFFF00;
+    color: #FFC0CB;
+    background: transparent;
+}

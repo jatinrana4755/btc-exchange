@@ -1,0 +1,186 @@
+<!-- START TOPBAR -->
+<div class='page-topbar' style="background: white">
+    <!--  <div class='logo-area'>
+  
+       </div> -->
+    <div class='quick-area'>
+      <div class='pull-left'>
+        <div class="info-menu left-links list-inline list-unstyled">
+  
+          <img class="toggle-logo logo-white" src="assets/images/image.png" alt="Logo" style="width: 65px;
+          margin-left: 37px;">
+  
+        </div>
+      </div>
+      <div class='pull-right'>
+        <div class="info-menu right-links list-inline list-unstyled">
+  
+          <a class="btn btn-secondary dropdown-toggle profile" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="background: #fdfdfd;color: #333333;text-transform: capitalize;">
+            <span class="userLogo" #userLogo>{{initials}}</span>&nbsp;&nbsp;
+
+            <span>{{auth.getUsername()}} &nbsp;&nbsp;
+              <i class="fa fa-angle-down"></i>
+            </span>
+  
+            <!--     <span><i class="fa fa-angle-down"></i></span> -->
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="color: aliceblue;">
+            
+      <li>
+              <a routerLink="adminsettings" routerLinkActive="active" style="color:rgba(118, 118, 118, 1);line-height:2;">
+                <i class="fa fa-wrench"></i> <span class="title">Settings</span>
+              </a>
+            </li>
+  
+  
+            <li class="last">
+              <a (click)="Logout()" style="color:rgba(118, 118, 118, 1);cursor: pointer;line-height:2;">
+                <i class="fa fa-lock"></i> Logout
+              </a>
+            </li>
+          </div>
+        </div>
+        <!-- <ul class="info-menu right-links list-inline list-unstyled">
+          <li class="profile">
+            <a href="#" data-toggle="dropdown" class="toggle">
+              <img src="assets/images/profile/profile.jpg" alt="user-image" class="img-circle img-inline">&nbsp;&nbsp;
+              <span style="text-transform: capitalize;">Harsh Mishra &nbsp;
+                <i class="fa fa-angle-down"></i>
+              </span>
+            </a>
+            <ul class="dropdown-menu profile animated fadeIn">
+              <li>
+                <a href="account-confirmation.html">
+                  <i class="fa fa-wrench"></i> Settings
+                </a>
+              </li>
+              <li>
+                <a href="ui-support.html">
+                  <i class="fa fa-info"></i> Help
+                </a>
+              </li>
+              <li class="last">
+                <a href="ui-login.html">
+                  <i class="fa fa-lock"></i> Logout
+                </a>
+              </li>
+            </ul>
+  
+  
+          </li>
+  
+  
+  
+        </ul> -->
+      </div>
+    </div>
+  
+  </div>
+  <!-- END TOPBAR -->
+  
+<!-- START CONTAINER -->
+<div class="page-container row-fluid container-fluid">
+
+   <!-- SIDEBAR - START -->
+
+   <div class="page-sidebar fixedscroll" id="sidebar">
+
+       <!-- MAIN MENU - START -->
+       <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+
+
+           <ul class='wraplist'>
+               <li class='menusection'>Admin</li>
+               <li class="">
+                   <a routerLink="controlpanel" routerLinkActive="active">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                       <span class="title">Control Panel</span>
+                   </a>
+               </li>
+               <li class="">
+                   <a routerLink="paymentmethods" routerLinkActive="active">
+                    <i class="fa fa-credit-card" aria-hidden="true"></i>
+                       <span class="title">Payment Methods</span>
+                   </a>
+               </li>
+               <li class="">
+                   <a routerLink="paymentaddress" routerLinkActive="active">
+                    <i class="fas fa-address-card"></i>
+                       <span class="title">Payment Address</span>
+                   </a>
+               </li>
+               <li class="">
+                   <a routerLink="buyorders" routerLinkActive="active">
+                        <i class="fas fa-cart-arrow-down"></i>
+                       <span class="title">Buy Orders</span>
+                   </a>
+               </li>
+              
+               <li class="">
+                   <a routerLink="sellorders" routerLinkActive="active">
+                        <i class="fas fa-money-bill-wave"></i>
+                       <span class="title">Sell Orders</span>
+                   </a>
+               </li>
+               
+
+               <li class="">
+                   <a routerLink="kyc" routerLinkActive="active">
+                       <i class="fa fa-user"></i>
+                       <span class="title">KYC</span>
+                   </a>
+               </li>
+
+                  <li class="">
+                    <a routerLink="cryptoDetails" routerLinkActive="active">
+                        <i class="fa fa-gear"></i>
+                        <span class="title">Crypto Currency Details</span>
+                    </a>
+                </li>
+
+               <li class="">
+                    <a routerLink="adminsettings" routerLinkActive="active">
+                        <i class="fa fa-gear"></i>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+              
+              <li class="last">
+                    <a  data-toggle="modal" data-target="#logoutModal"  >
+                        <i class="fa fa-sign-out"></i> 
+                        <span class="title">Logout</span>
+                    </a>
+                </li>
+               
+
+          
+           </ul>
+           
+       </div>
+       <!-- MAIN MENU - END -->
+
+   </div>
+   <!--  SIDEBAR - END -->
+                          <!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body" style="border-left: 4px solid #e64242;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 style="font-weight: bold"><i class="fas fa-exclamation-circle"  style="color:#e64242"></i>&nbsp; Do you want to logout ?</h4> <br>
+        <button type="button" class="btn btn-danger" (click)="Logout()"> <i class="fa fa-sign-out"></i> &nbsp;Logout</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fas fa-times-circle"></i>&nbsp;Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+                     
+
+   <router-outlet></router-outlet>
+   
+
+  
+</div>
+<!-- END CONTAINER -->

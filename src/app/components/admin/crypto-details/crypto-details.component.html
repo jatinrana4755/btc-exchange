@@ -1,0 +1,271 @@
+<div id="main-content" class=" ">
+  <section class="wrapper main-wrapper row" style=''>
+
+    <div class='col-xs-12'>
+      <div class="page-title">
+
+        <div class="pull-left">
+          <!-- PAGE HEADING TAG - START -->
+          <h1 class="title">Settings</h1>
+          <!-- PAGE HEADING TAG - END -->
+        </div>
+
+
+      </div>
+    </div>
+    <div class="clearfix"></div>
+<div class="alert alert-message" id="alert-message">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <i class="fas" id="icon-alert"></i> &nbsp; {{message}}
+            </div>
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- Nav tabs -->
+          <div class="card" style="border-radius: 1px;border-left:2.5px solid #e66f30;">
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab" (click)="getCryptoDetails('WesternUnion')">Western Union</a>
+              </li>
+              <li role="presentation">
+                <a href="#mg" aria-controls="mg" role="tab" data-toggle="tab" (click)="getCryptoDetails('MoneyGram')">Money Gram</a>
+              </li>
+              <li role="presentation">
+                <a href="#ria" aria-controls="ria" role="tab" data-toggle="tab" (click)="getCryptoDetails('Ria')">Ria</a>
+              </li>
+              <li role="presentation">
+                <a href="#wire" aria-controls="wire" role="tab" data-toggle="tab" (click)="getCryptoDetails('Wire')">Wire</a>
+              </li>
+              <li role="presentation">
+                <a href="#cash" aria-controls="cash" role="tab" data-toggle="tab" (click)="getCryptoDetails('CashDeposit')">Cash Deposit</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+              <div role="tabpanel" class="tab-pane active" id="home">
+                <div>
+                  <button class="btn btn-primary pull-right" data-target="#myModal" data-toggle="modal" (click)="selectCrypto('WesternUnion')"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Western Union</button>
+                </div>
+                <div *ngIf="cryptoLoading" style="text-align:center"><i class="fa fa-spin fa-spinner" style="font-size: 50px; "></i></div>
+                <div *ngIf="wuDetails && !cryptoLoading">
+                  <div *ngFor="let wu of wuDetails;let i = index">
+                    <label class="switch">
+                        <input type="checkbox" name="methodType" checked id="wu{{i}}" [(ngModel)] = "wu.status" [value]="wu.status">
+                        <span class="slider round"></span>
+                    </label><br>
+                    <label class="btn btn-success btn-sm" *ngIf="wu.status">Active</label>
+                    <label class="btn btn-danger btn-sm" *ngIf="!wu.status">InActive</label>
+                    <div class="container-info">
+                      <div *ngFor="let key of keyArr[i]">
+                        <p class="info"><span class="lebel-card-order">{{key}}</span> : {{detailsObj[i][key]}}</p>
+                      </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" data-target="#editModal" data-toggle="modal" (click)="editSave('WesternUnion', wu.status, wu.id)"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;UPDATE</button>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="mg">
+                <div>
+                  <button class="btn btn-primary pull-right" data-target="#myModal" data-toggle="modal" (click)="selectCrypto('MoneyGram')"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Money Gram</button>
+                </div>
+                <div *ngIf="cryptoLoading" style="text-align:center"><i class="fa fa-spin fa-spinner" style="font-size: 50px; "></i></div>
+                <div *ngIf="wuDetails && !cryptoLoading">
+                  <div *ngFor="let wu of wuDetails;let i = index">
+                    <label class="switch">
+                        <input type="checkbox" name="methodType" checked id="wu{{i}}" [(ngModel)] = "wu.status" [value]="wu.status">
+                        <span class="slider round"></span>
+                    </label><br>
+                    <label class="btn btn-success btn-sm" *ngIf="wu.status">Active</label>
+                    <label class="btn btn-danger btn-sm" *ngIf="!wu.status">InActive</label>
+                    <div class="container-info">
+                      <div *ngFor="let key of keyArr[i]">
+                        <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[i][key]}}</p>
+                      </div>
+                    </div>
+
+                    
+                    <button class="btn btn-primary" data-target="#editModal" data-toggle="modal" (click)="editSave('MoneyGram', wu.status, wu.id)"><i class="fas fa-check-circle"  ></i>&nbsp;&nbsp;Update</button>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="wire">
+                <div>
+                  <button class="btn btn-primary pull-right" data-target="#myModal" data-toggle="modal" (click)="selectCrypto('Wire')"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Wire </button>
+                </div>
+                <div *ngIf="cryptoLoading" style="text-align:center"><i class="fa fa-spin fa-spinner" style="font-size: 50px; "></i></div>
+                <div *ngIf="wuDetails && !cryptoLoading">
+                  <div *ngFor="let wu of wuDetails;let i = index">
+                    <label class="switch">
+                        <input type="checkbox" name="methodType" checked id="wu{{i}}" [(ngModel)] = "wu.status" [value]="wu.status">
+                        <span class="slider round"></span>
+                    </label><br>
+                    <label class="btn btn-success btn-sm" *ngIf="wu.status">Active</label>
+                    <label class="btn btn-danger btn-sm" *ngIf="!wu.status">InActive</label>
+                    
+                    <div class="container-info">
+                      <div *ngFor="let key of keyArr[i]">
+                        <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[i][key]}}</p>
+                      </div>
+                    </div>
+
+                    
+                    <button class="btn btn-primary" data-target="#editModal" data-toggle="modal" (click)="editSave('Wire', wu.status, wu.id)"><i class="fas fa-check-circle"  ></i>Update</button>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="ria">
+                <div>
+                  <button class="btn btn-primary pull-right" data-target="#myModal" data-toggle="modal" (click)="selectCrypto('Ria')"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Ria </button>
+                </div>
+                <div *ngIf="cryptoLoading" style="text-align:center"><i class="fa fa-spin fa-spinner" style="font-size: 50px; "></i></div>
+                <div *ngIf="wuDetails && !cryptoLoading">
+                  <div *ngFor="let wu of wuDetails;let i = index">
+                    <label class="switch">
+                        <input type="checkbox" name="methodType" checked id="wu{{i}}" [(ngModel)] = "wu.status" [value]="wu.status">
+                        <span class="slider round"></span>
+                    </label><br>
+                    <label class="btn btn-success btn-sm" *ngIf="wu.status">Active</label>
+                    <label class="btn btn-danger btn-sm" *ngIf="!wu.status">InActive</label>
+                    <div class="container-info">
+                      <div *ngFor="let key of keyArr[i]">
+                        <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[i][key]}}</p>
+                      </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" data-target="#editModal" data-toggle="modal" (click)="editSave('Ria', wu.status, wu.id)"><i class="fas fa-check-circle"  ></i>&nbsp;&nbsp;Update</button>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="cash">
+                <div>
+                  <button class="btn btn-primary pull-right" data-target="#myModal" data-toggle="modal" (click)="selectCrypto('CashDeposit')"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp;Cash Deposit </button>
+                </div>
+                <div *ngIf="cryptoLoading" style="text-align:center"><i class="fa fa-spin fa-spinner" style="font-size: 50px; "></i></div>
+                <div *ngIf="wuDetails && !cryptoLoading">
+                  <div *ngFor="let wu of wuDetails;let i = index">
+                    <label class="switch">
+                        <input type="checkbox" name="methodType" checked id="wu{{i}}" [(ngModel)] = "wu.status" [value]="wu.status">
+                        <span class="slider round"></span>
+                    </label><br>
+                    <label class="btn btn-success btn-sm" *ngIf="wu.status">Active</label>
+                    <label class="btn btn-danger btn-sm" *ngIf="!wu.status">InActive</label>
+                    <div class="container-info">
+                      <div *ngFor="let key of keyArr[i]">
+                        <p><span class="lebel-card-order">{{key}}</span> : {{detailsObj[i][key]}}</p>
+                      </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" data-target="#editModal" data-toggle="modal" (click)="editSave('CashDeposit', wu.status, wu.id)"><i class="fas fa-check-circle"  ></i>&nbsp;&nbsp;Update</button>
+                    <hr>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body" style="overflow: auto">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-md-12">
+                    <label class="form-label label-form">Details</label>
+                </div>
+               
+                <div class="form-group">
+                  <!-- <span class="desc">e.g. "5"(in minutes)</span> -->
+                  <form #formWu="ngForm">
+                    <div *ngFor="let wu of cryptoArr; let in=index">
+                      <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-sm-3">
+                              <input type="text" [(ngModel)]="cryptoArr[in].key" name="key{{in}}" class="form-control" placeholder="Key" required /><br>
+                            </div>
+                            <div class="col-sm-8">
+                              <input type="text" [(ngModel)]="cryptoArr[in].value" name="value{{in}}" class="form-control" placeholder="Value" required /><br>
+                            </div>
+                            <div class="col-sm-1" style="padding: 0">
+                              <button (click)="removeWu(in)" class="btn-sm btn btn-danger btn-round"> <i class="fa fa-close"  ></i></button>
+                            </div>
+                        </div>
+                      </div>
+                      <br />
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="col-md-12">
+                            <button (click)="addWu()" [disabled]="!formWu.form.valid" class="btn btn-success btn-round"><i class="fas fa-plus-circle"></i>&nbsp;&nbsp; Add Field</button>
+                        </div>
+                          
+                      </div>
+                      
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="form-label label-form">Proof</label>
+                        <span class="desc">It can be image in any format</span>
+                        <div class="controls">
+                          <i class=""></i>
+                          <input type="file" class="form-control" name="time" [(ngModel)]="proofWu">
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-info btn-round" (click)="submitWu()" data-dismiss="modal"><i class="fas fa-check-circle"></i>&nbsp;&nbsp; Submit</button>
+                </div>
+               
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div id="editModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Update</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to update the status</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="edit()">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        
+      </div>
+    </div>
+
+  </div>
+</div>

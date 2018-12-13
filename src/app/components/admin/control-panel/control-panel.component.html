@@ -1,0 +1,83 @@
+<!-- START CONTENT -->
+<section id="main-content" class=" ">
+    <div class="wrapper main-wrapper row" style=''>
+
+        <div class="col-lg-12" style="margin:auto;float: none;">
+            <div class="alert alert-message" id="alert-message">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <i class="fas" id="icon-alert"></i> &nbsp;
+                {{message}}
+            </div>
+            <section class="box" style="border-left: 3px solid #e77512;">
+            <!-- <div class="loader" *ngIf="loading"></div> -->
+                <header class="panel_header">
+                    <h2 class="title pull-left">Control Panel</h2>
+                    <div class="actions panel_actions pull-right">
+                        <!-- <a class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></a> -->
+                        <!-- <a class="box_close fa fa-times"></a> -->
+                    </div>
+                </header>
+                <div class="content-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="table-responsive" data-pattern="priority-columns">
+                                <table id="tech-companies-1" class="table table-small-font no-mb table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Currency</th>
+                                            <th>Spread Multiplier( Buy )</th>
+                                            <th>Spread Multiplier( Sell )</th>
+                                            <th>Options</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let detail of details">
+                                            <!-- <th><i class="fa fa-dot-circle-o complete"></i> Deal number 126515</th> -->
+                                            <td>{{detail.coin_name}}</td>
+                                            <td>{{detail.buy_fee}}</td>
+                                            <td>{{detail.sell_fee}}</td>
+                                            <td><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal"
+                                                    (click)="storeDetails(detail)">Edit</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- MAIN CONTENT AREA ENDS -->
+    </div>
+</section>
+
+ // edit modal  
+<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Control Panel</h4>
+            </div>
+            <div class="modal-body">
+                <form  #editForm="ngForm" novalidate>
+                    <div class="form-group">
+                        <label for="methods">Spread Multiplier( Buy )</label>
+                        <input type="text" class="form-control" id="methods" [(ngModel)]="buy_fee"  name="buy_fee">
+                    </div>
+                    <div class="form-group">
+                        <label for="methods">Spread Multiplier( sell )</label>
+                        <input type="text" class="form-control" id="methods" [(ngModel)]="sell_fee" [value]="sell_fee" name="sell_fee">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success" (click)="onSubmit()" data-dismiss="modal"><i class="fas fa-check"></i> &nbsp;Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END CONTENT -->
